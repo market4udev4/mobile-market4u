@@ -1,0 +1,45 @@
+<h2 ng-click="open($index)">Dados pessoais</h2>
+
+<div class="boxDados">
+    <label for="cpf" class="margin_t_10">CPF<span class="campo_obg">*</span></label>
+    <label class="box1" for="cpf">
+        <input type="text" obg="1" id="cpf" placeholder="999.999.999-99" ng-model="$root.usuario.CPF" autocomplete="cpf" />
+        <span class="msgValidator">CPF inválido</span>
+        <span class="msgValidator2">CPF já utilizado</span>
+    </label>
+
+    <div id="boxDadosPessoaisCompleto" style="display: {{$root.usuario.ID?'block':'none'}}">
+        <label for="nome_completo" class="margin_t_10">Seu nome completo</label>
+        <label class="box1" for="nome_completo">
+            <input type="text" obg="1" id="nome_completo" placeholder="Insira seu nome completo" ng-model="$root.usuario.NOME" />
+            <span class="msgValidator">Insira seu nome completo</span>
+        </label>
+
+        <label for="nome_completo" class="margin_t_10">Gênero</label>
+        <label style="margin-right: 15px;">
+            <input type="radio" id="genero_M" name="genero" value="M" ng-model="$root.usuario.GENERO" />
+            Masculino
+        </label>
+        <label>
+            <input type="radio" id="genero_F" name="genero" value="F" ng-model="$root.usuario.GENERO" />
+            Feminino
+        </label>
+
+        <label for="data_nascimento" class="margin_t_10">Data de nascimento</label>
+        <label class="box1" for="data_nascimento">
+            <input type="text" obg="1" id="data_nascimento" placeholder="99/99/9999" ng-model="$root.usuario.DATA_NASCIMENTO_FORMAT" />
+            <span class="msgValidator">Data de nascimento inválido</span>
+        </label>
+    </div>
+
+    <label class="campo_obg">
+        <span class="campo_obg">*</span> Campos obrigatórios
+    </label>
+
+    <script type="application/javascript">
+        setTimeout(function() {
+            mask('#cpf', ['999.999.999-99']);
+            mask('#data_nascimento', ['99/99/9999']);
+        }, 1000);
+    </script>
+</div>

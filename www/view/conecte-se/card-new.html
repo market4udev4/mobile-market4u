@@ -1,0 +1,15 @@
+<md-content style="padding-bottom: 100px;" class="scrollable-content" scroll md-scroll-y>
+    <h4 id="avisoCC" ng-include src="$root.BASE+'view/conecte-se/aviso-cc.html'"></h4>
+    <ul>
+        <li ng-click="$root.location('#!/add-card-new')">
+            <i class="mdi mdi-content-add-circle"></i>
+        </li>
+        <li ng-repeat="item in LST">
+            <img ng-if="item.IMG" src="{{item.IMG}}">
+            <p>{{item.NAME}}</p>
+            <label>Crédito</label>
+            <span>{{item.TEXT}}</span>
+            <i class="mdi mdi-action-highlight-remove" ng-click="remove(item.ID)"></i>
+        </li>
+    </ul>
+</md-content>

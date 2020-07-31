@@ -1,0 +1,8 @@
+<md-content class="scrollable-content" scroll md-scroll-y>
+    <img style="top: -10px;" id="imgFixo" ng-click="location('#!/')" src="img/logo.png" border="0" role="button">
+    <a ng-click="AppBrowser(REG.LINK);$event.stopPropagation();">
+        <h4 ng-bind-html="REG.TEXTO"></h4>
+        <img ng-if="device=='ios'" width="130" src="img/app_store.png">
+        <img ng-if="device=='android'" width="160" src="img/google_play.png">
+    </a>
+</md-content>

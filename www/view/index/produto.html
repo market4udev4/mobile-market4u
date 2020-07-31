@@ -1,0 +1,23 @@
+<div ng-if="ITEM.TYPE=='PROD'" ng-click="$root.clickItem('produto', ITEM)">
+    <img data-src="{{ITEM.IMAGEM}}" src="img/market4u.png" onload="$(this).attr('load', 1)" load="0" alt="">
+    <p class="preco" ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO">
+        <label class="de" ng-if="ITEM.DE_PRECO_FORMAT">{{ITEM.DE_PRECO_FORMAT}}</label>
+        <label>{{ITEM.PRECO_FORMAT}}</label>
+        <label class="kg" ng-if="ITEM.UNIDADE_MEDIDA=='KG'">KG</label>
+    </p>
+    <h4>{{ITEM.NOME}}</h4>
+</div>
+<div ng-if="ITEM.TYPE=='PROD' && $root.LOCAL.ITEM.MAPS.PROXIMO" unidade_medida="{{ITEM.UNIDADE_MEDIDA}}" class="addRemoveProd" qtde="{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}">
+    <i ng-click="addRemoveQtdeProd(ITEM, '-')" class="mdi mdi-content-remove"></i>
+    <span>{{$root.QTDE_PRODUTOS[ITEM.PROD_ID]?$root.QTDE_PRODUTOS[ITEM.PROD_ID]:0}}</span>
+    <i ng-click="addRemoveQtdeProd(ITEM, '+')" class="mdi mdi-content-add"></i>
+</div>
+<div ng-click="$root.clickItem('naoEncontrou')" ng-if="ITEM.TYPE=='NAO_ENCONTROU'">
+    <i class="mdi mdi-communication-message"></i>
+    <b>Não encontrou o que queria?</b>
+    Informe-nos e/ou deixe sua sugestão
+</div>
+<div ng-click="$root.clickItem('verProdutos', SUBCAT)" ng-if="ITEM.TYPE=='VEJA_TODOS'">
+    Veja todos os produtos
+    <i class="mdi mdi-navigation-arrow-forward"></i>
+</div>

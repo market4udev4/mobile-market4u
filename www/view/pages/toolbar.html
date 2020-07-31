@@ -1,0 +1,24 @@
+<script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/plugins/crypto-js.js"></script>
+
+<i mn-touch swipe-right="swipeRight()" ng-if="controller == 'Index'" class="btn_maps mdi mdi-action-view-headline" ng-click="menuOpen()"></i>
+<span swipe-right="swipeRight()" ng-if="controller == 'Index' && $root.QTDE_PUSH" ng-click="menuOpen()" id="qtde_push">{{$root.QTDE_PUSH}}</span>
+<div id="top" ng-if="controller == 'Index'">
+    <div ng-if="usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')" style="display: inline-block;">
+        Meu saldo
+        <b>{{usuario.MEUSALDO_FORMAT}}</b>
+    </div>
+    <div id="sem_saldo" ng-if="!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO" ng-click="location('#!/minha-carteira')">
+        Adicionar saldo <i class="mdi mdi-content-add-circle"></i>
+    </div>
+</div>
+<div class="topTitulo" ng-if="controller != 'Index'">
+    <a class="open-left" ng-if="Titulo" ng-click="backpageTop()">
+        <i class="mdi mdi-navigation-chevron-left"></i>
+    </a>
+    <div class="textoTitulo" ng-bind-html="Titulo"></div>
+</div>
+<img ng-if="controller != 'Index'" ng-click="location('#!/')" src="img/logo.png" border="0">
+<div ng-click="$root.clickItem('busca_locais')" ng-if="controller == 'Index' && $root.LOCAL.TEXTO" id="local">
+    <i class="mdi mdi-maps-place"></i> LOCAL
+    <span>{{$root.LOCAL.TEXTO}}</span>
+</div>

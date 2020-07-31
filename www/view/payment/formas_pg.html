@@ -1,0 +1,87 @@
+<div class="boxSubTotal" ng-include src="$root.BASE+'view/payment/total.html'" ng-if="!$root.FORMAS_PG['VOUCHER'] && $root.FORMAS_PG && TOTAL_POR && transacaoId"></div>
+<h4 class="pague_com" ng-if="!$root.FORMAS_PG['VOUCHER'] && $root.FORMAS_PG && TOTAL_POR">Pagamento</h4>
+<ul>
+    <li ng-if="VALOR_PG>=PG.VALOR_MIN && (PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?true:VALOR_PG)" class="{{PG.ACTIVE?'active':''}} {{PG.ACTIVE_SALDO?'active_checkbox':''}}" tipo="{{PG.TIPO}}" ng-repeat="PG in $root.FORMAS_PG" ng-click="$root.selectFormaPg(PG)">
+        <label class="utilizado_saldo checkbox_custom" ng-if="PG.TIPO=='SALDO'">Usar meu saldo
+            <span class="checkmark"></span>
+        </label>
+        <label class="utilizado_voucher" ng-if="PG.TIPO=='VOUCHER'">Cupons de desconto</label>
+        {{PG.TIPO=='SALDO'||PG.TIPO=='VOUCHER'?'':PG.NOME}} <i class="mdi mdi-action-done"></i>
+        <label class="valor" ng-if="PG.TIPO=='SALDO'">{{usuario.MEUSALDO_FORMAT}}</label>
+        <div class="clearBoth" ng-if="PG.TIPO=='SALDO' && VALOR_PG"></div>
+        <label style="margin-top: 15px;display: block;" ng-if="PG.TIPO=='SALDO' && VALOR_PG">Selecione o <b>método de pagamento</b> que você deseja usar:</label>
+        <div class="clearBoth"></div>
+        <ul ng-if="PG.TIPO=='VOUCHER'">
+            <li class="{{V.ACTIVE?'active':''}} itens" ng-repeat="V in PG.ITENS" ng-click="selectVoucher(PG.ITENS, V)">
+                <span ng-if="V.CODIGO"><i class="mdi mdi-action-done"></i> </span><b>{{V.CODIGO}}</b> <i>{{V.NOME}}</i>
+                <label ng-if="V.ACTIVE && V.DESCRICAO" ng-bind-html="V.DESCRICAO"></label>
+            </li>
+            <li class="c">
+                <input id="ADD_VOUCHER" placeholder="Insira um cód. promocional" maxlength="50" ng-model="$root.ADD_VOUCHER">
+                <a class="a-btn" ng-click="addVoucher()"><i class="mdi mdi-action-loyalty"></i> Adicionar</a>
+                <div class="clearBoth"></div>
+            </li>
+        </ul>
+        <div class="boxSubTotal" ng-include src="$root.BASE+'view/payment/total.html'" ng-if="PG.TIPO=='VOUCHER' && ($root.FORMAS_PG['SALDO'] || VALOR_PG) && transacaoId"></div>
+        <h4 class="pague_com" ng-if="PG.TIPO=='VOUCHER' && ($root.FORMAS_PG['SALDO'] || VALOR_PG)">Pagamento</h4>
+        <h4 class="valor_restante" ng-if="((PG.TIPO=='VOUCHER' && !$root.FORMAS_PG['SALDO']) || PG.TIPO=='SALDO') && ACTIVE_SALDO && VALOR_PG && transacaoId">Valor restante <b>R$ {{VALOR_PG_FORMAT}}</b></h4>
+        <h4 class="valor_cashback" ng-if="((PG.TIPO=='VOUCHER' && !$root.FORMAS_PG['SALDO']) || PG.TIPO=='SALDO') && VALOR_CASHBACK && transacaoId">
+            <span>Cashback</span>
+            <b>R$ {{VALOR_CASHBACK}}</b>
+            <div class="clearBoth"></div>
+            <p ng-bind-html="CASHBACK_TEXTO"></p>
+        </h4>
+        <div id="boxDescricao" ng-if="PG.DESCRICAO&&PG.ACTIVE" ng-bind-html="PG.DESCRICAO"></div>
+        <div id="boxCC" ng-if="PG.CC==1&&PG.ACTIVE">
+            <ul id="boxCard" ng-if="PG.LST.length">
+                <li id="MC"><label>{{PG.GATEWAY=='PLUGPAG'?'Tipo de cartão':'Meus cartões'}}</label></li>
+                <li id="{{CC.ID}}" ng-repeat="CC in PG.LST">
+                    <h4 class="{{CC.ACTIVE?'active_checkbox':''}}">
+                        <label ng-click="selectCard(PG.LST, CC)" class="checkbox_custom"><img ng-if="CC.IMG" src="{{CC.IMG}}"> {{CC.TEXT}} <span class="checkmark"></span></label>
+                    </h4>
+                </li>
+            </ul>
+            <div ng-if="!$root.CARD">
+                <h4 id="avisoCC" ng-include src="$root.BASE+'view/conecte-se/aviso-cc.html'"></h4>
+
+                <label for="cardName">Nome do dono do cartão</label>
+                <label class="box1" for="cardName">
+                    <input type="text" id="cardName" ng-model="PG.cardName" placeholder="Ex: JOÃO DA SILVA" autocomplete="cc-name" />
+                </label>
+                <label class="margin_t_10" for="cardNumber">Número do cartão</label>
+                <label class="box1" for="cardNumber">
+                    <input type="text" id="cardNumber" ng-model="PG.cardNumber" placeholder="9999 9999 9999 9999" autocomplete="cc-number" />
+                    <span class="msgValidator">Número do cartão inválido</span>
+                    <script type="application/javascript">setTimeout(function(){mask('#cardNumber', ['9999 9999 9999 9999', '9999 9999 9999 9999999999999'], 19);}, 1000);</script>
+                    <img id="imgBandeira" style="top: 5px;" onerror="$(this).hide()" />
+                </label>
+                <input type="hidden" id="cardBandeira" />
+
+                <div class="margin_t_10">
+                    <div class="float-left">
+                        <label class="margin_t_10" for="expirationMonthYear">Validade</label>
+                        <div>
+                            <label class="box1 float-left" for="expirationMonthYear" style="width: 102px;">
+                                <input maxlength="5" type="text" id="expirationMonthYear" ng-model="PG.expirationMonthYear" placeholder="mm/aa" autocomplete="cc-exp" />
+                                <span class="msgValidator" style="width: 130px;">Validade inválido</span>
+                                <script type="application/javascript">setTimeout(function(){mask('#expirationMonthYear', ['99/99']);}, 1000);</script>
+                            </label>
+                            <div class="clearBoth"></div>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <label class="margin_t_10" for="cvv">Cód. de segurança</label>
+                        <label class="box1" for="cvv" style="width: 140px;">
+                            <input type="password" id="cvv" ng-model="PG.cvv" placeholder="999" autocomplete="cc-csc" />
+                        </label>
+                    </div>
+                    <div class="clearBoth"></div>
+                </div>
+
+                <h4 class="{{PG.SALVAR_CC?'active_checkbox':''}}">
+                    <label ng-click="PG.SALVAR_CC = PG.SALVAR_CC?0:1" class="checkbox_custom">Salvar cartão <span class="checkmark"></span></label>
+                </h4>
+            </div>
+        </div>
+    </li>
+</ul>

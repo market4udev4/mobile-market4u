@@ -1,0 +1,23 @@
+<ul>
+    <li ng-if="usuario.WHATSAPP.ATIVO" ng-click="whatsapp()">
+        <p style="font-weight: 500; margin: 0; padding: 0 5px">Precisa de ajuda ou teve algum problema? Não se preocupe, toque abaixo e fale com alguem do nosso suporte :)</p>
+        <img src="img/whatsapp.png">
+        <a>Contatar suporte</a>
+    </li>
+    <li ng-if="$root.usuario.FAQ" ng-click="location('#!/faq')">
+        <i class="mdi mdi-communication-live-help"></i>
+        <a>FAQ</a>
+    </li>
+    <li ng-click="AppBrowser($root.usuario.TERMOS_DE_USO)">
+        <i class="mdi mdi-action-list"></i>
+        <a>Termos de Uso</a>
+    </li>
+    <li ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">
+        <i class="mdi mdi-action-list"></i>
+        <a>Termos de Privacidade</a>
+    </li>
+    <li style="border-bottom: 0;" id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></li>
+    <li style="position: fixed; left: 0; bottom: 0; width: 100%">
+        Versão - {{versao_app_mobile}}
+    </li>
+</ul>

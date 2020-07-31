@@ -1,0 +1,48 @@
+<div id="contentChatScreen">
+    <md-content id="panelConversa" ng-init="init(); initScroll();" class="scrollable-content" style="padding: 15px 0 0px;" scroll md-scroll-y>
+        <div ng-repeat="item in ITENS" class="baloon {{item.USUARIO == null ? 'baloon_right' : 'baloon_left' }}" data-id="{{item.ID}}">
+            <div class="responsearrow mdi-hardware-keyboard-arrow-down" ng-click="openResposeBox($event.target)" ></div>
+            <div class="reposta_vinda" ng-if="(item.MENSAGEM_IN != null && item.MENSAGEM_IN !='') || item.RESPOSTA_ANEXO != null">
+                <ul>
+                    <li class="nome_user">{{item.NOME_USUARIO || CLIENTE.PRIMEIRONOME}}</li>
+                    <li class="limit_response">
+                        <div class="resposta_txt" ng-if="item.MENSAGEM_IN != null  && item.MENSAGEM_IN !=''">
+                            {{item.MENSAGEM_IN}}
+                        </div>
+                        <div class="resposta_img" ng-if="item.RESPOSTA_ANEXO != null">
+                            <img src="{{item.RESPOSTA_ANEXO}}" alt="">
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="panel_choice" >
+                <span style="color:{{item.USUARIO == null ? '#4eb07d' : '#93b83e'}}" ng-click="startResponse($event.target)"><i class="mdi-content-reply"></i> Responder</span>
+            </div>
+            <div ng-if="item.ANEXO.length && item.ANEXO != null " class="content_img_baloon"><img src="{{item.ANEXO}}" alt=""></div>
+            <div class="content_description_baloon">{{item.DESCRICAO}}</div>
+            <small>{{item.DATAHORA}}<span ng-if="item.USUARIO != null"> - {{item.NOME_USUARIO}}</span></small>
+        </div>
+    </md-content>
+    <md-content id="panelInput">
+        <div id="showImage">
+
+        </div>
+
+        <div id="rest">
+            <input type="textShortMessage" id="reponser" ng-model="ChatLst.CONVERSATION" ng-model-options="{ getterSetter: true }" placeholder="Envie uma mensagem ...">
+            <button id="sendFile" class="senderButton" onClick="document.getElementById('fileManager').click();"><i class="mdi-editor-attach-file"></i>
+                <form onsubmit="return false;" method="post">
+                    <input type="file" id="fileManager" onchange="angular.element(this).scope().uploadFile(this)">
+                </form>
+
+                <button id="sendMessage" class="senderButton" ng-click="sendMessage();"><i class="mdi-content-send"></i>
+        </div>
+
+    </md-content>
+</div>
+
+
+
+
+<!--{{baloon.USUARIO == null ? 'baloon_right' : 'baloon_left' }}-->

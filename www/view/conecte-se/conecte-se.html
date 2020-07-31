@@ -1,0 +1,37 @@
+<md-content class="scrollable-content" scroll md-scroll-y>
+    <form id="formLogin" class="form" onsubmit="return false;" method="post">
+        <div style="text-align: center; margin-top: 50px">
+            <img id="imgFixo" ng-click="location('#!/')" src="img/logo.png" border="0" role="button">
+
+            <br><a class="a-btn" type="google" ng-click="login('google')">Login usando Google</a>
+
+            <br><a class="a-btn" type="facebook" ng-click="login('facebook')">Login usando Facebook</a>
+
+            <br><br>ou faça login por<br><br>
+        </div>
+
+        <label for="email_cpf">E-mail ou CPF</label>
+        <label class="box1" for="email_cpf">
+            <input placeholder="Insira seu e-mail ou CPF" type="text" id="email_cpf" ng-model="$root.usuario.EMAIL_CPF" autocomplete="email" />
+        </label>
+
+        <label for="senha" ng-if="!$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Senha</label>
+        <label ng-if="!$root.usuario.ESQUECEU_SENHA" class="box1" for="senha">
+            <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
+            <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
+            <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+        </label>
+
+        <button class="btn-salvar" type="submit" ng-click="entrar()">{{$root.usuario.ESQUECEU_SENHA?'RECUPERAR':'LOGIN'}}</button>
+
+        <div id="boxUrlLink">
+            <a ng-click="$root.usuario.ESQUECEU_SENHA = !$root.usuario.ESQUECEU_SENHA">{{$root.usuario.ESQUECEU_SENHA?'Tentar logar novamente!':'Esqueceu a senha?'}}</a>
+
+            <a ng-click="location('#!/cadastro', 0, 1)">Cadastrar-se</a>
+        </div>
+
+        <div id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></div>
+
+        <div class="clearBoth"></div>
+    </form>
+</md-content>

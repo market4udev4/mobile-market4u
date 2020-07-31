@@ -1,0 +1,10 @@
+<md-content class="scrollable-content" style="padding: 15px 0 110px;" scroll md-scroll-y>
+    <ul ng-if="LST.length">
+        <li ng-repeat="item in LST" ng-click="click(item)">
+            <i class="vis" ng-if="!item.VISUALIZADO"></i><label>{{item.DATAHORA}} - <b>{{item.TITULO}}</b></label>
+            <span ng-bind-html="item.DESCRICAO"></span>
+            <b><i class="mdi mdi-navigation-chevron-right"></i></b>
+        </li>
+    </ul>
+    <h4 id="nenhumRegLocalizado" ng-if="!LST.length" style="margin-top: 15px">Nenhum registro localizado!</h4>
+</md-content>

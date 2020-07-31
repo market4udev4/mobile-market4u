@@ -1,0 +1,29 @@
+<div id="codigo">
+    <label for="ADD_VOUCHER">Código</label>
+    <input id="ADD_VOUCHER" placeholder="Insira um cód. promocional" maxlength="50" ng-model="$root.ADD_VOUCHER">
+    <a class="a-btn" ng-click="addVoucher()"><i class="mdi mdi-action-loyalty"></i> Adicionar</a>
+    <div class="clearBoth"></div>
+</div>
+
+<md-content class="scrollable-content" scroll md-scroll-y>
+    <ul>
+        <li ng-repeat="item in LST" ng-click="click(item)">
+            <label>{{item.DATAHORA}}</label>
+            <span ng-bind-html="item.TIPO_DESCRICAO"></span>
+            <b>{{item.VALOR_LST}} <i class="mdi mdi-navigation-chevron-right"></i></b>
+            <i ng-bind-html="item.DESCRICAO"></i>
+        </li>
+    </ul>
+    <h4 ng-if="usuario.FACEBOOK.ATIVO || usuario.INSTAGRAM.ATIVO" style="text-align: center; padding: 10px">
+        <div ng-if="!LST.length" >
+            Você ainda não tem nenhum
+            <br><b>Código Promocional</b>.
+            <br><br>
+        </div>
+        Segue a gente nas <b>redes sociais</b>, sempre compartilhamos Códigos. :)
+        <div style="margin-top: 10px">
+            <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
+            <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
+        </div>
+    </h4>
+</md-content>

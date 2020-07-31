@@ -1,0 +1,16 @@
+<h2>Confirmar dados</h2>
+
+<ul id="confirmarDados">
+    <li>CPF: <span>{{$root.usuario.CPF}}</span></li>
+    <li>Seu nome: <span>{{$root.usuario.NOME}}</span></li>
+    <li>Gênero: <span>{{$root.usuario.GENERO=='M'?'Masculino':'Feminino'}}</span></li>
+    <li>Data de nascimento: <span>{{$root.usuario.DATA_NASCIMENTO_FORMAT}}</span></li>
+    <li class="margin_t_25">E-mail: <span>{{$root.usuario.EMAIL}}</span></li>
+    <li>Celular: <span>{{$root.usuario.CELULAR}}</span></li>
+    <li class="margin_t_25">Endereço: <span>{{$root.usuario.STREET}}, {{$root.usuario.NUMBER}} - {{$root.usuario.POSTALCODE}} - {{$root.usuario.CITY}} - {{$root.usuario.STATE}}</span></li>
+</ul>
+
+<h3 class="{{$root.usuario.CONCORDO_TERMOS_POLITICA?'active_checkbox':''}}">
+    <label ng-click="$root.usuario.CONCORDO_TERMOS_POLITICA = $root.usuario.CONCORDO_TERMOS_POLITICA?0:1" class="checkbox_custom">Li e Concordo com os <span class="checkmark"></span></label>
+    <a ng-click="AppBrowser($root.usuario.TERMOS_DE_USO)">Termos de Uso</a> e a <a ng-click="AppBrowser($root.usuario.POLITICA_DE_PRIVACIDADE)">Política de Privacidade</a>
+</h3>

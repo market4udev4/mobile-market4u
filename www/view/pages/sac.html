@@ -1,0 +1,93 @@
+<md-content class="scrollable-content" style="padding: 15px 0 110px;" scroll md-scroll-y>
+    <div class="abas">
+        <div class="inner_abas">
+            <div class="item_aba">
+                <div class="abertos abs" ng-click="TransitionAbas($event.target)">Abertos</div>
+                <div class="active borderAba abertos"></div>
+            </div>
+            <div class="item_aba">
+                <div class="fechados abs" ng-click="TransitionAbas($event.target)">Fechados</div>
+                <div class="borderAba fechados"></div>
+            </div>
+        </div>
+    </div>
+    <div class="button_row">
+        <button class="novoChamado" ng-click="OpenNewSac()">Novo Chamado</button>
+    </div>
+
+    <div class="panelItems" id="abertos" >
+        <div ng-repeat="item in ABERTOS" class="chamado" ng-click="openChat(item.ID)" ng-if="ABERTOS.length" >
+            <h4 class="chamado_title">{{item.TITULO}}</h4>
+            <span>{{item.STATUS == 'N' ? 'Retornaremos em breve' : 'Esperando sua resposta'}}</span>
+        </div>
+        <span ng-if="!ABERTOS.length">Nenhum chamado aberto!</span>
+    </div>
+
+    <div class="panelItems" id="fechados">
+        <div id="headerFechados">
+            <span>Gostou do nosso atendimento? Aqui preparamos uma lista com os chamados que você ja terminou. Conte-nos o que achou!</span>
+        </div>
+        <div class="chamado fechado" ng-repeat="item in FECHADOS">
+           <div class="fechado_chamado_header">
+               <h4 class="chamado_title">{{item.TITULO}}</h4>
+           </div>
+            <div class="area_ranking">
+                <input type="hidden" class="id_sac_fechado" value="{{item.ID}}">
+                <ul>
+                    <li class="mdi-action-star-rate setRanking" ng-click="setRanking($event.target)" data-value="1"></li>
+                    <li class="mdi-action-star-rate setRanking" ng-click="setRanking($event.target)" data-value="2"></li>
+                    <li class="mdi-action-star-rate setRanking" ng-click="setRanking($event.target)" data-value="3"></li>
+                    <li class="mdi-action-star-rate setRanking" ng-click="setRanking($event.target)" data-value="4"></li>
+                    <li class="mdi-action-star-rate setRanking" ng-click="setRanking($event.target)" data-value="5"></li>
+                    <li style="display: flex; align-items: center;">
+                        <span style="color:{{showTypeAnalise(PONTUACAO_TEMP).color}}; font-weight: bold; position: relative; left: 26%;">
+                            {{showTypeAnalise(PONTUACAO_TEMP).text}}
+                        </span>
+                    </li>
+                    <li class="showstatusR" style="display: flex; align-items: center;"></li>
+                </ul>
+
+                <div class="comments">
+                    <textarea name="comments" class="comments textcomments" cols="30" rows="10" placeholder="Comentários sobre o atendimento"></textarea>
+                </div>
+                <div class="buttonsFechado">
+                    <button class="saveRankingFechado buttonfechados" ng-click="saveAnalise($event.target)">Salvar pontuação</button>
+                    <button class="cancelRankingFechado buttonfechados" ng-click="closeChamadoAnalise($event.target)">Cancelar</button>
+                </div>
+            </div>
+            <div class="buttonsRanking " ng-if="item.PONTUACAO == 0 || item.PONTUACAO == null" >
+                <small class="aval_message">*Você ainda não avaliou esse chamado!</small>
+                <button class="buttonfechados analise" ng-click="openChamadoAnalise($event.target)">Avaliar chamado</button>
+            </div>
+            <div class="buttonsRanking " ng-if="item.PONTUACAO != 0 && item.PONTUACAO != null" >
+                <ul>
+                    <li ng-repeat="_ in ((_ = []) && (_.length=5) && _) track by $index" class="{{item.PONTUACAO > $index ? 'showRankingS ' :''}} mdi-action-star-rate showRanking"></li>
+                </ul>
+                <span style="color:{{showTypeAnalise(item.PONTUACAO).color}}; font-weight: bold; position: relative; left: 26%;">{{showTypeAnalise(item.PONTUACAO).text}}</span>
+            </div>
+        </div>
+    </div>
+</md-content>
+<md-content id="newSac">
+    <div id="headerFormSac">
+        <h3>Precisa de ajuda?</h3>
+        <span>Crie esse chamado para entrar em contato conosco para que possamos te ajudar da melhor forma possível!</span>
+    </div>
+    <form action="" class="fromnew" id="fromnew">
+        <input type="hidden" name="CLIENTE" value="{{LOGIN.ID}}">
+        <div class="cell-form">
+            <input type="text" name="TITULO" placeholder="Título">
+        </div>
+        <div class="cell-form">
+            <textarea name="DESCRICAO" id="descricao" cols="30" rows="10" placeholder="Descreva brevemente seu problema!"></textarea>
+        </div>
+        <div class="cell-form finalForm">
+            <div class="two-buttons">
+                <button type="button" id="saveSac" ng-click="saveSac()">Salvar</button>
+                <button type="button" id="cancelSac" ng-click="CloseNewSac()">Cancelar</button>
+
+            </div>
+        </div>
+    </form>
+
+</md-content>

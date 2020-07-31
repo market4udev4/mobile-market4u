@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>market4u</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Language" content="pt_BR">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="IE=edge" http-equiv="x-ua-compatible">
+    <meta content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+
+    <link href="favicon.png" rel="shortcut icon">
+
+    <style>
+      html{
+        height: 100%;
+        /*background-image: url("img/logo.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: transparent !important;
+        background-size: 80%;*/
+      }
+      body{
+        background-size: 80%;
+        background-image: url("img/logo.png");
+        background-color: transparent !important;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow-x: hidden;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+      }
+      body > .app{
+        display: none;
+      }
+      #sem_internet{
+        text-align: center;
+        background: #FFF;
+        padding-bottom: 150px;
+      }
+      #sem_internet a{
+        display: block;
+        margin-top: 20px;
+        text-decoration: underline;
+        color: #007aff;
+      }
+      #sem_internet img{
+        width: 80%;
+        display: block;
+        margin: 140px auto 100px;
+      }
+      #boxPago{
+        display: none;
+      }
+      div#gps,
+      div#banner_modal{
+        display: none;
+      }
+    </style>
+    <link href="css/keyframes.css" rel="stylesheet" type="text/css">
+    <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
+    <link href="plugins/angular/css/mobile-angular-ui-base.css" rel="stylesheet" />
+    <script src="plugins/jquery-3.3.1.min.js"></script>
+    <script src="plugins/jquery-migrate-1.4.1.min.js"></script>
+    <script src="plugins/angular.min.js"></script>
+    <script src="plugins/angular-route.min.js"></script>
+    <script src="plugins/angular-animate.min.js"></script>
+    <script src="plugins/angular/js/mobile-angular-ui.min.js"></script>
+    <script src="plugins/angular/js/mobile-angular-ui.gestures.min.js"></script>
+    <script src="plugins/jquery.visible.js"></script>
+    <script src="plugins/mn-touch/mn-touch.min.js"></script>
+    <script src="plugins/device-detector/ng-device-detector.min.js"></script>
+    <script src="plugins/device-detector/re-tree.min.js"></script>
+    <link rel="stylesheet" href="css/angular-material.min.css">
+    <script src="plugins/angular-aria.js"></script>
+    <script src="plugins/angular-material.min.js"></script>
+    <script src="plugins/angular-sanitize.js"></script>
+    <script src="plugins/vanilla-masker.min.js"></script>
+    <script src="plugins/elastic.js"></script>
+
+    <script src="cordova.js"></script>
+
+    <script type="text/javascript">
+      var semInternetTime = null;
+      function semInternet() {
+        clearTimeout(semInternetTime);
+        semInternetTime = setTimeout(function () {
+          $(document).ready(function () {
+            $('body *').remove();
+            $('body').append('<div id="sem_internet">\n' +
+                    '      <img src="img/logo.png" border="0">\n' +
+                    '      Não existe conexão com a internet.\n' +
+                    '      <a onclick="location.reload()">Clique aqui e tente novamente</a>\n' +
+                    '    </div>');
+          });
+        }, 3000);
+      }
+    </script>
+
+    <link onerror="semInternet()" href="https://fonts.googleapis.com/css?family=Montserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=5.3.2#038;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link onerror="semInternet()" href="https://m-dev4.market4u.com.br/Mobile/www/css/style-sistema.css" rel="stylesheet" type="text/css">
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/config.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/app.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/functions.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/main.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/location.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/index.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/sac.js"></script>
+    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/chat.js"></script>
+  </head>
+  <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" new_iphone="{{new_iphone}}" controller="{{controller}}" ng-app="App">
+    <div id="carregando" style="display: none">
+      <div>
+        <img src="img/loader.gif" border="0">
+        Carregando...
+      </div>
+    </div>
+
+    <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar" ng-include src="$root.BASE+'view/pages/toolbar.html'"></div>
+
+    <div class="app" ng-controller="Main">
+      <a style="display: none" ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
+        <img src="img/whatsapp.png">
+      </a>
+
+      <div class="app-body" top_0="{{top_0}}">
+        <div class="app-content">
+          <div class="scrollable ng-scope" border-top="{{$root.BARRA_SALDO?0:border_top}}" ng-view></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="boxPopup" box="locais" ng-include src="$root.BASE+'view/pages/locais.html'"></div>
+
+    <ul tour="{{$root.TOUR}}" id="boxTour" ng-if="$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/tour.html'"></ul>
+
+    <div id="banner_modal" ng-click="$root.BANNERS_MODAL=[];" ng-if="$root.BANNERS_MODAL.length && !$root.TOUR && controller == 'Index'" ng-include src="$root.BASE+'view/pages/banners-modal.html'"></div>
+
+    <div id="gps" ng-include src="$root.BASE+'view/pages/gps.html'"></div>
+
+    <ul show="{{$root.MenuBottom?1:0}}" id="menu-bottom" step="{{STEP}}" tour="{{$root.TOUR}}" ng-include src="$root.BASE+'view/pages/menu-bottom.html'"></ul>
+
+    <div id="boxPago">
+      <i class="mdi mdi-navigation-check"></i>
+      <span>Compra realizada com sucesso</span>
+    </div>
+
+    <div id="fundo_transparente" ng-click="menuClose()" mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ui-prevent-touchmove-defaults></div>
+
+    <div id="menuLeft" class="Menuleft " mn-touch swipe-left="swipeLeft()" swipe-right="swipeRight()" ng-include src="$root.BASE+'view/pages/menu.html'"></div>
+  </body>
+</html>

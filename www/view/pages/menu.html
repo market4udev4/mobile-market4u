@@ -1,0 +1,47 @@
+<div id="contentLeft">
+    <div id="userLeft">
+        <img ng-if="!usuario.ID" border="0" src="" ng-click="location('#!/conecte-se')" onerror="onErrorUser(this)">
+        <img ng-if="usuario.ID" border="0" src="" ng-click="location('#!/cadastro')" onerror="onErrorUser(this)">
+        <div ng-if="!usuario.ID" ng-click="location('#!/conecte-se')">
+            <b>Olá</b>
+            <label>Conecte-se</label>
+        </div>
+        <div ng-if="usuario.ID" ng-click="location('#!/cadastro')">
+            <b>{{usuario.NOME}}</b>
+            <label>{{usuario.EMAIL}}</label>
+            <a>Perfil</a>
+        </div>
+    </div>
+    <div id="wifi" ng-include src="$root.BASE+'view/pages/wifi.html'"></div>
+    <ul>
+        <li data-id="DVCM">
+            <a href="tel:180">
+                <i class="mdi mdi-communication-call"></i>
+                Denuncie violência contra mulher
+            </a>
+        </li>
+        <li data-id="{{menu.id}}" class="{{controller == menu.controller?'active':''}}" ng-repeat="menu in MenuLeft" ng-if="usuario.ID || menu.logado">
+            <a ng-click="location(menu.url, menu.external, menu.pageStart?1:0)">
+                <i ng-if="menu.icon" class="mdi {{menu.icon}}"></i>
+                {{menu.titulo}}
+                <span ng-if="menu.id=='PUSH' && $root.QTDE_PUSH">{{$root.QTDE_PUSH}}</span>
+            </a>
+        </li>
+        <li class="{{controller == 'AreaRestrita'?'active':''}}" ng-if="usuario.RESTRITO">
+            <a ng-click="swipeLeft();AcessoRestrito('/');">
+                <i class="mdi mdi-action-lock"></i>
+                Área restrita
+            </a>
+        </li>
+        <li ng-if="usuario.ID">
+            <a style="color: #e94847" ng-click="logout()">
+                <i class="mdi mdi-content-clear"></i>
+                Sair da conta
+            </a>
+        </li>
+    </ul>
+    <div id="bottom">
+        <img ng-if="usuario.FACEBOOK.ATIVO" ng-click="AppBrowser(usuario.FACEBOOK)" id="icon_facebook" width="25" src="img/icon-facebook.png" border="0">
+        <img ng-if="usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser(usuario.INSTAGRAM)" id="icon_instagram" style="float: left" width="37" src="img/icon-instagram.png" border="0">
+    </div>
+</div>

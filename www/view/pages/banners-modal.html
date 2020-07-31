@@ -1,0 +1,5 @@
+<ul type="MODAL" class="banners">
+    <li class="{{BANNER.ACTIVE?'active':''}}" data-id="{{BANNER.ID}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
+        <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+    </li>
+</ul>

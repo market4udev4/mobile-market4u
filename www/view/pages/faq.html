@@ -1,0 +1,10 @@
+<md-content class="scrollable-content" scroll md-scroll-y>
+    <h4 ng-bind-html="CONTENT"></h4>
+    <ul ng-if="LST.length">
+        <li ng-repeat="REG in LST">
+            <h1>{{REG.NOME}}</h1>
+            <p>{{REG.DESCRICAO}}</p>
+        </li>
+    </ul>
+    <h4 id="nenhumRegLocalizado" ng-if="!LST.length">Nenhum registro localizado!</h4>
+</md-content>

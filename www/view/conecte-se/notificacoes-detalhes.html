@@ -1,0 +1,7 @@
+<md-content style="padding-bottom: 90px;" class="scrollable-content" scroll md-scroll-y>
+    <!--<img ng-click="REG.URL?location(REG.URL, 0, 1):null" src="https://tecbio-media.s3-sa-east-1.amazonaws.com/banners/ce9a6fb2becc2d235e62b125e9260102.png">-->
+    <div style="padding: 10px" ng-bind-html="to_trusted(REG.DESCRICAO)"></div>
+    <div style="text-align: center">
+        <a ng-if="REG.TYPE=='redirect'" ng-click="location(REG.URL, 0, 1)">Ver agora</a>
+    </div>
+</md-content>

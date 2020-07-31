@@ -1,0 +1,18 @@
+<md-content class="scrollable-content" scroll md-scroll-y>
+    <ul ng-switch="PARAMS.SET">
+        <li ng-switch-when="BEB_ALC">
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
+            <div class="progress-circle progress-{{PERCENTUAL}}">
+                <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
+            </div>
+        </li>
+        <li style="text-align: center" ng-switch-when="BLUETOOTH">
+            <p style="margin: 60px 0" ng-bind-html="to_trusted(REG.TEXTO)"></p>
+            <img ng-if="IMG" src="img/loader.gif" border="0">
+        </li>
+        <li ng-switch-default>
+            <h1 ng-bind-html="to_trusted(REG.SUB_TITULO)"></h1>
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
+        </li>
+    </ul>
+</md-content>

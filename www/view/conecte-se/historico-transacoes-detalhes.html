@@ -1,0 +1,67 @@
+<md-content style="padding: 15px 0 110px;" class="scrollable-content" scroll md-scroll-y>
+    <i style="font-size: 26px;vertical-align: sub;" class="mdi mdi-editor-attach-money"></i> <span ng-bind-html="REG.TIPO_DESCRICAO"></span>
+    <div class="clearBoth"></div>
+
+    <a ng-if="REG.TIPO=='CA'" id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
+
+    <div class="float-left margin-r-15" ng-if="REG.TOTAL">
+        <br><b>{{REG.TIPO=='C'?'TOTAL':'VALOR'}}</b><br>
+        {{REG.TOTAL}}
+    </div>
+
+    <div class="float-left margin-r-15" ng-if="REG.DESCONTO">
+        <br><b>DESCONTO</b><br>
+        {{REG.DESCONTO}}
+    </div>
+
+    <div class="float-left" ng-if="REG.SUB_TOTAL">
+        <br><b>SUB-TOTAL</b><br>
+        {{REG.SUB_TOTAL}}
+    </div>
+    <div class="clearBoth"></div>
+
+    <div style="z-index: 9999" ng-if="REG.QR_CODE" ng-click="$root.AppBrowser(REG.QR_CODE)">
+        <br><b>Nota fiscal</b><br>
+        <a style="text-decoration: underline; padding: 0 10px; margin: 0; display: block; color: #00CB00; font-size: 18px">Clique aqui</a>
+    </div>
+
+    <div ng-if="REG.M_ID">
+        <br><b>LOCAL</b><br>
+        {{REG.M_NOME?REG.M_NOME+' - ':''}}{{REG.M_ENDERECO}}, {{REG.M_NUMERO}} - {{REG.M_BAIRRO}} - {{REG.M_ESTADO}}
+    </div>
+
+    <div ng-if="REG.PRODUTOS.length" id="Produtos">
+        <br><b>PRODUTOS</b><br>
+        <ul>
+            <li ng-repeat="PROD in REG.PRODUTOS">
+                <div class="info">
+                    <h4>{{PROD.NOME}}</h4>
+                    <span>{{PROD.CAT_DESCRICAO}}</span>
+                    <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
+                    <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                    <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                    <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
+                </div>
+                <div class="clearBoth"></div>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-if="REG.FP.length">
+        <br><b>FORMAS DE PAGAMENTO</b><br>
+        <i ng-repeat="fp in REG.FP">
+            {{fp.NOME}} ({{fp.VALOR}}{{fp.DESCRICAO}}) <br>
+            <a style="text-decoration: underline" ng-click="AppBrowser(fp.open_browser)" ng-if="REG.AG_PG&&fp.open_browser">Pagar agora</a>
+        </i>
+    </div>
+
+    <div ng-if="REG.P_ID">
+        <br><b>PRODUTO</b><br>
+        {{REG.P_UPC_CODE}} - {{REG.P_NOME}}
+    </div>
+
+    <div>
+        <br><b>DATA</b><br>
+        {{REG.DATAHORA}}
+    </div>
+</md-content>

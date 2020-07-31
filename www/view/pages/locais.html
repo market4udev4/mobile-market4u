@@ -1,0 +1,17 @@
+<div class="topTitulo">
+    <a class="open-left">
+        <i class="mdi mdi-maps-place"></i>
+    </a>
+    <div class="textoTitulo">Local de compra</div>
+    <img ng-click="$root.clickItem('voltaLocais')" src="img/logo.png" border="0">
+</div>
+<div class="scrollable-content" scroll md-scroll-y>
+    <ul>
+        <li class="{{ITEM.ACTIVE?'active':''}}" ng-click="$root.setLocal(ITEM)" ng-repeat="ITEM in $root.LOCAL.ITENS">
+            {{ITEM.NOME_ABV}}
+            <a>Alterar</a>
+            <label ng-if="ITEM.MAPS.DISTANCE">{{ITEM.MAPS.DISTANCE}}</label>
+            <span>{{ITEM.ENDERECO}}, {{ITEM.NUMERO}} {{ITEM.BAIRRO}} - {{ITEM.CIDADE}}{{ITEM.ESTADO?' - '+ITEM.ESTADO:''}}</span>
+        </li>
+    </ul>
+</div>

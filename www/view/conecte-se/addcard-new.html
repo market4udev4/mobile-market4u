@@ -1,0 +1,42 @@
+<md-content style="padding-bottom: 100px;" class="scrollable-content" scroll md-scroll-y>
+    <h4 id="avisoCC" ng-include src="$root.BASE+'view/conecte-se/aviso-cc.html'"></h4>
+
+    <form id="formCadastro" class="form" onsubmit="return false;" autocomplete="off" method="post">
+        <label for="cardName" class="margin_t_5">Nome do dono do cartão</label>
+        <label class="box1" for="cardName">
+            <input type="text" id="cardName" ng-model="PG.cardName" placeholder="Ex: JOÃO DA SILVA" autocomplete="cc-name" />
+        </label>
+        <label for="cardNumber" class="margin_t_5">Número do cartão</label>
+        <label class="box1" for="cardNumber">
+            <input type="text" id="cardNumber" placeholder="9999 9999 9999 9999" autocomplete="cc-number" />
+            <span class="msgValidator">Número do cartão inválido</span>
+            <script type="application/javascript">setTimeout(function(){mask('#cardNumber', ['9999 9999 9999 9999', '9999 9999 9999 9999999999999'], 19);}, 1000);</script>
+            <img id="imgBandeira" onerror="$(this).hide()" />
+        </label>
+        <input type="hidden" id="cardBandeira" />
+
+        <div class="margin_t_10">
+            <div class="float-left">
+                <label for="expirationMonthYear" class="margin_t_10">Validade</label>
+                <div>
+                    <label for="expirationMonthYear" class="box1 float-left" style="width: 102px;">
+                        <input maxlength="5" type="text" id="expirationMonthYear" placeholder="mm/aa" autocomplete="cc-exp" />
+                        <span class="msgValidator" style="width: 130px;">Validade inválido</span>
+                        <script type="application/javascript">setTimeout(function(){mask('#expirationMonthYear', ['99/99']);}, 1000);</script>
+                    </label>
+                    <div class="clearBoth"></div>
+                </div>
+            </div>
+            <div class="float-right">
+                <label for="cvv" class="margin_t_10">Cód. de segurança</label>
+                <label class="box1" for="cvv" style="width: 140px;">
+                    <input type="password" id="cvv" placeholder="999" autocomplete="cc-csc" />
+                </label>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+
+        <button class="btn-salvar" type="submit" ng-click="salvar()">SALVAR</button>
+        <div class="clearBoth"></div>
+    </form>
+</md-content>

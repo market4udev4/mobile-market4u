@@ -1,0 +1,58 @@
+<h2 ng-click="open($index)">Endereço</h2>
+
+<div class="boxDados">
+    <label for="postalcode" class="margin_t_10">CEP<span class="campo_obg">*</span></label>
+    <label class="box1" for="postalcode">
+        <input type="text" id="postalcode" obg="1" placeholder="99999-999" ng-model="$root.usuario.POSTALCODE" />
+        <span class="msgValidator">CEP inválido</span>
+    </label>
+
+    <div id="boxEnderecoCompleto" style="display: {{$root.usuario.ID?'block':'none'}}">
+        <label for="street" class="margin_t_10">Endereço<span class="campo_obg">*</span></label>
+        <label class="box1" for="street">
+            <input type="text" id="street" obg="1" placeholder="Insira o endereço" ng-model="$root.usuario.STREET" />
+        </label>
+
+        <label for="number" class="margin_t_10">Número<span class="campo_obg">*</span></label>
+        <label class="box1" for="number">
+            <input type="text" id="number" obg="1" placeholder="Insira o número" ng-model="$root.usuario.NUMBER" />
+        </label>
+
+        <label for="apartamento" class="margin_t_10">Apartamento / bloco</label>
+        <label class="box1" for="apartamento">
+            <input type="text" id="apartamento" placeholder="Insira o apartamento e bloco" ng-model="$root.usuario.APARTAMENTO" />
+        </label>
+
+        <label for="apartamento" class="margin_t_10">Complemento</label>
+        <label class="box1" for="complemento">
+            <input type="text" id="complemento" placeholder="Insira um complemento" ng-model="$root.usuario.COMPLEMENTO" />
+        </label>
+
+        <label for="district" class="margin_t_10">Bairro<span class="campo_obg">*</span></label>
+        <label class="box1" for="district">
+            <input type="text" id="district" obg="1" placeholder="Insira o bairro" ng-model="$root.usuario.DISTRICT" />
+        </label>
+
+        <label for="city" class="margin_t_10">Cidade<span class="campo_obg">*</span></label>
+        <label class="box1" for="city">
+            <input type="text" id="city" obg="1" placeholder="Insira a cidade" ng-model="$root.usuario.CITY" />
+        </label>
+
+        <label for="state" class="margin_t_10">Estado<span class="campo_obg">*</span></label>
+        <label class="box1" for="state">
+            <select id="state" obg="1" ng-model="$root.usuario.STATE">
+                <option value="{{ESTADO.UF}}" ng-repeat="ESTADO in $root.usuario.ESTADOS">{{ESTADO.NOME}}</option>
+            </select>
+        </label>
+    </div>
+
+    <label class="campo_obg">
+        <span class="campo_obg">*</span> Campos obrigatórios
+    </label>
+
+    <script type="application/javascript">
+        setTimeout(function() {
+            mask('#postalcode', ['99999-999']);
+        }, 1000);
+    </script>
+</div>

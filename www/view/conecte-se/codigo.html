@@ -1,0 +1,19 @@
+<form class="form" id="formCadastroCodigo" onsubmit="return false;" method="post">
+    <label style="text-align: center">Uma mensagem com um código de verificação foi enviada para <br><b>{{$root.usuario.ENVIADO_PARA.MSG}}</b><i ng-if="$root.usuario.ENVIADO_PARA.TIPO == 'EMAIL'"><br>(Verifique sua caixa de SPAM)</i>.</label>
+
+    <a ng-if="$root.usuario.ENVIADO_PARA.CODIGO" ng-click="reenviarCodSms($root.usuario.ENVIADO_PARA)">Não recebeu um código de verificação? <br>{{$root.usuario.ENVIADO_PARA.TIPO == 'EMAIL'?'Enviar':'Reenviar'}} código para SMS</a>
+
+    <label for="codigo" class="margin_t_10">Código</label>
+    <label for="codigo" class="box1 margin_t_10" id="boxCodigo">
+        <input id="codigo" placeholder="Insira o código recebido" type="number" ng-model="$root.usuario.CODIGO" />
+    </label>
+
+    <label for="senha" ng-if="$root.usuario.ESQUECEU_SENHA" class="margin_t_10">Nova senha</label>
+    <label for="senha" ng-if="$root.usuario.ESQUECEU_SENHA" class="box1">
+        <input type="password" id="senha" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
+        <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
+        <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+    </label>
+
+    <button style="display: block !important;" class="btn-salvar" type="button" ng-click="seguinte()">CONFIRME</button>
+</form>

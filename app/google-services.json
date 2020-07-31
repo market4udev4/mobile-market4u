@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "344238321654",
+    "firebase_url": "https://market4u-7b12d.firebaseio.com",
+    "project_id": "market4u-7b12d",
+    "storage_bucket": "market4u-7b12d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344238321654:android:6221123d8572525e0f21d7",
+        "android_client_info": {
+          "package_name": "br.com.mobile.market4u"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344238321654-884maei8qv4rapjau6sm35v8cpg6vj9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBRj1Hx-IBwzckueISuK8I-DF8WSF08CE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344238321654-884maei8qv4rapjau6sm35v8cpg6vj9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

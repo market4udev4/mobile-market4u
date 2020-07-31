@@ -1,0 +1,10 @@
+<h2 ng-click="open($index)">Suas preferências</h2>
+
+<div class="boxDados">
+    <ul id="preferencias">
+        <li ng-click="pref(item_prev.ID)" class="{{$root.usuario.PREFERENCIAS[item_prev.ID]?'active':''}}" ng-repeat="item_prev in item.ITENS">
+            <img height="66" src="img/preferencias/{{item_prev.IMG}}.png"> {{item_prev.NOME}}
+        </li>
+        <div class="clearBoth"></div>
+    </ul>
+</div>

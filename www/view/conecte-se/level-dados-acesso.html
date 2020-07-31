@@ -1,0 +1,35 @@
+<h2 ng-click="open($index)">Dados de acesso</h2>
+<div class="boxDados">
+    <label for="email" class="margin_t_10">E-mail<span class="campo_obg">*</span></label>
+    <label class="box1" for="email">
+        <input placeholder="Insira seu e-mail válido" autocomplete="email" type="email" obg="1" id="email" ng-model="$root.usuario.EMAIL" />
+        <span class="msgValidator">E-mail inválido</span>
+        <span class="msgValidator2">E-mail já utilizado</span>
+    </label>
+
+    <label for="numero_celular" class="margin_t_10">Número de celular<span class="campo_obg">*</span></label>
+    <label class="box" for="numero_celular" id="boxTelefone">
+        <label>
+            <span>+55</span>
+        </label>
+        <input id="numero_celular" placeholder="(99) 99999-9999" obg="1" type="text" ng-model="$root.usuario.CELULAR" />
+        <span class="msgValidator">Insira um número de celular válido</span>
+    </label>
+
+    <label for="senha" class="margin_t_10">{{usuario.ID?'Nova senha':'Senha'}}<span ng-if="!usuario.ID" class="campo_obg">*</span></label>
+    <label class="box1" for="senha" id="boxSenha">
+        <input type="password" id="senha" obg="{{usuario.ID?'0':'1'}}" placeholder="Insira sua senha" ng-model="$root.usuario.SENHA" />
+        <i id="showPassword" onclick="showPassword()" class="mdi mdi-action-visibility"></i>
+        <span class="msgValidator">Possuir no mínino 8 caracteres</span>
+    </label>
+
+    <label class="campo_obg">
+        <span class="campo_obg">*</span> Campos obrigatórios
+    </label>
+
+    <script type="application/javascript">
+        setTimeout(function() {
+            mask('#numero_celular', [(($('#numero_celular').val() ? $('#numero_celular').val().length == 15 : false) ? '(99) 99999-9999' : '(99) 9999-99999'), '(99) 99999-9999'], 14);
+        }, 1000);
+    </script>
+</div>

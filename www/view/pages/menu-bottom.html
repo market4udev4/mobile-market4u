@@ -1,0 +1,16 @@
+<li class="{{controller == 'Index'?'active':''}}" ng-click="clickMenu('inicio')">
+    <i class="mdi mdi-action-store"></i> Produtos
+</li>
+<li ng-click="clickMenu('carteira')">
+    <i class="mdi mdi-action-credit-card"></i> Carteira
+</li>
+<li id="pagar_escanear" ng-click="clickMenu('pagar_escanear')">
+    <img src="img/barcodeQrCode.png">
+    <label>Escanear</label>
+</li>
+<li class="{{controller == 'Cadastro'?'active':''}}" style="float: right" ng-click="clickMenu('ajustes')">
+    <i class="mdi mdi-social-person"></i> {{usuario.PRIMEIRONOME?usuario.PRIMEIRONOME:'Perfil'}}
+</li>
+<li style="float: right" ng-click="clickMenu('destravar')">
+    <i class="mdi mdi-action-lock-open"></i> Destravar <span>18+</span>
+</li>

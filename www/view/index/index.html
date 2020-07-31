@@ -1,0 +1,208 @@
+<div id="boxCompras" ng-if="$root.TIPO_PG == 'COMPRAR'">
+    <i ng-if="$root.PRODUTOS_COMPRAS.CATEGORIAS" ng-click="$root.clickItem('busca')" id="buscaProdutos" class="mdi mdi-action-search"></i>
+    <ul id="boxCategorias">
+        <li data-id="{{CAT.ID}}" class="{{CAT.ACTIVE?'active':''}}" ng-repeat="CAT in $root.PRODUTOS_COMPRAS.CATEGORIAS">
+            <a style="{{CAT.STYLE}}" ng-click="getCompras(CAT)">{{CAT.DESCRICAO}}</a>
+        </li>
+    </ul>
+
+    <div class="boxPopup" box="busca" ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.ATIVO">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.clickItem('index')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <label id="busca" for="pesquisa">
+                <i class="mdi mdi-action-search"></i>
+                <input type="text" id="pesquisa" ng-keyup="buscaProdutos(1)" ng-model="$root.PESQUISA" placeholder="{{$root.PRODUTOS_CATEGORIAS_BUSCA.PLACEHOLDER}}">
+                <i ng-if="$root.PESQUISA && $root.PESQUISA != ''" ng-click="clearPesquisa()" class="mdi mdi-content-clear"></i>
+            </label>
+        </div>
+        <div class="scrollable-content flex" type="produtos_categorias_busca" scroll="{{$root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO?1:0}}" md-scroll-y>
+            <div ng-if="$root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS.length">
+                <ul type="BUSCA" class="banners">
+                    <li class="{{BANNER.ACTIVE?'active':''}}" data-id="{{BANNER.ID}}" ng-repeat="BANNER in $root.PRODUTOS_CATEGORIAS_BUSCA.BANNERS">
+                        <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="produtos_lst">
+                <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in $root.PRODUTOS_CATEGORIAS_BUSCA.ITENS" ng-include src="$root.BASE+'view/index/produto.html'"></li>
+                <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_CATEGORIAS_BUSCA.SCROLL.ATIVO" type="LOADING">
+                    <img src="img/loader.gif" border="0">
+                    Carregando...
+                </li>
+            </ul>
+        </div>
+    </div>
+    <md-content id="boxProdutos" class="scrollable-content flex" type="produtos" scroll="{{$root.PRODUTOS_COMPRAS.SCROLL.ATIVO}}" flex md-scroll-y>
+        <div ng-if="$root.PRODUTOS_COMPRAS.BANNERS.length">
+            <ul type="COMPRAS" class="banners">
+                <li class="{{BANNER.ACTIVE?'active':''}}" data-id="{{BANNER.ID}}" ng-repeat="BANNER in $root.PRODUTOS_COMPRAS.BANNERS">
+                    <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
+                </li>
+            </ul>
+        </div>
+        <ul>
+            <li count="{{$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length}}" ng-repeat="SUBCAT in $root.PRODUTOS_COMPRAS.SUBCATEGORIAS">
+                <div ng-if="$root.PRODUTOS_COMPRAS.SUBCATEGORIAS.length > 1" class="t">
+                    <span>{{SUBCAT.DESCRICAO}}</span>
+                    <a ng-click="$root.clickItem('verProdutos', SUBCAT)" ng-if="SUBCAT.VEJA_TODOS">Todos os produtos</a>
+                    <div class="clearBoth"></div>
+                </div>
+                <ul class="produtos_lst scrollable-content flex" scroll md-scroll-x>
+                    <li type="{{ITEM.TYPE}}" clear_both="{{ITEM.CLEAR_BOTH?1:0}}" ng-repeat="ITEM in SUBCAT.ITENS" ng-include src="$root.BASE+'view/index/produto.html'"></li>
+                    <li ng-if="!$root.scrollLiberado && $root.PRODUTOS_COMPRAS.SCROLL.ATIVO" type="LOADING">
+                        <img src="img/loader.gif" border="0">
+                        Carregando...
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </md-content>
+
+    <div class="boxPopup" box="nao_encontrou" ng-if="$root.NAO_ENCONTROU">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.clickItem('naoEncontrouVoltar')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Não encontrou o que queria?</div>
+        </div>
+        <div class="scrollable-content" scroll md-scroll-y>
+            <form id="formNaoEncontrou" class="form" onsubmit="return false;" method="post">
+                <label for="sugestao">
+                    <textarea placeholder="Informe-nos e/ou deixe sua sugestão aqui" id="sugestao"></textarea>
+                </label>
+                <button ng-click="naoEncontrou()" type="button">Enviar</button>
+            </form>
+            <h4 ng-if="$root.usuario.FACEBOOK.ATIVO || $root.usuario.INSTAGRAM.ATIVO" style="text-align: center; padding: 15px 10px 0">
+                Segue a gente nas <b>redes sociais</b> :)
+                <div style="margin-top: 10px">
+                    <img ng-if="$root.usuario.FACEBOOK.ATIVO" ng-click="AppBrowser($root.usuario.FACEBOOK)" width="32" style="margin-right: 20px;" src="img/icon-facebook.png" border="0">
+                    <img ng-if="$root.usuario.INSTAGRAM.ATIVO" ng-click="AppBrowser($root.usuario.INSTAGRAM)" width="50" src="img/icon-instagram.png" border="0">
+                </div>
+            </h4>
+        </div>
+    </div>
+
+    <div class="boxPopup" box="carrinho" ng-if="$root.CARRINHO">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.clickItem('carrinho')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">Carrinho</div>
+        </div>
+        <div class="scrollable-content" scroll md-scroll-y>
+            <ul>
+                <li ng-click="$root.clickItem('busca_locais')" id="local_item" ng-if="$root.LOCAL.ITEM && $root.CARRINHO_COMPRAS.PRODUTOS">
+                    <i class="mdi mdi-maps-place"></i> <b>Local</b> {{$root.LOCAL.ITEM.NOME_ABV}}
+                    <a>Alterar</a>
+                    <label ng-if="$root.LOCAL.ITEM.MAPS.DISTANCE">{{$root.LOCAL.ITEM.MAPS.DISTANCE}}</label>
+                    <span>{{$root.LOCAL.ITEM.ENDERECO}}, {{$root.LOCAL.ITEM.NUMERO}} {{$root.LOCAL.ITEM.BAIRRO}} - {{$root.LOCAL.ITEM.CIDADE}}{{$root.LOCAL.ITEM.ESTADO?' - '+$root.LOCAL.ITEM.ESTADO:''}}</span>
+                </li>
+                <li ng-repeat="PROD in $root.CARRINHO_COMPRAS.PRODUTOS">
+                    <div class="b" ng-click="$root.clickItem('produto', PROD)">
+                        <img data-src="{{PROD.IMAGEM}}" src="img/market4u.png" alt="">
+                        <h4>{{PROD.NOME}}</h4>
+                        <label class="obs" ng-if="PROD.OBS && $root.LOCAL.ITEM.MAPS.PROXIMO">{{PROD.OBS}}</label>
+                        <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                        <label ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                        <label class="total_desconto" ng-if="PROD.TOTAL_DESCONTO_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">Desconto <b>{{PROD.TOTAL_DESCONTO_FORMAT}}</b></span></label>
+                        <label class="total" ng-if="PROD.TOTAL_FORMAT && $root.LOCAL.ITEM.MAPS.PROXIMO"><span class="v">Total <b>{{PROD.TOTAL_FORMAT}}</b></span></label>
+                    </div>
+                    <div ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{PROD.UNIDADE_MEDIDA}}">
+                        <i ng-click="addRemoveQtdeProd(PROD, '+', true)" class="mdi mdi-content-add-circle"></i>
+                        <span>{{$root.QTDE_PRODUTOS[PROD.PROD_ID]?(PROD.UNIDADE_MEDIDA=='KG'?$root.formatValor($root.QTDE_PRODUTOS[PROD.PROD_ID]):$root.QTDE_PRODUTOS[PROD.PROD_ID]):(PROD.QTDE?PROD.QTDE:0)}}{{PROD.UNIDADE_MEDIDA=='KG'?'kg':''}}</span>
+                        <i ng-click="addRemoveQtdeProd(PROD, '-', true)" class="mdi mdi-content-remove-circle"></i>
+                    </div>
+                </li>
+                <li style="height: auto;text-align: center" ng-if="!$root.CARRINHO_COMPRAS.PRODUTOS">
+                    Nenhum produto adicionado na sua lista de compra!
+                </li>
+                <li style="height: auto;padding-bottom: 0;">
+                    <a style="{{$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR?'':'text-align: center;'}}" id="addMaisItens" ng-click="$root.clickItem('carrinho')">Adicionar{{$root.CARRINHO_COMPRAS.PRODUTOS?' mais itens':''}}<i class="mdi mdi-content-add-circle"></i></a>
+                    <a ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR" id="limparCarrinho" ng-click="limparCarrinho()">Limpar carrinho<i class="mdi mdi-content-remove-circle"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.LOCAL.ITEM.MAPS.PROXIMO" id="subTotalCarrinho">
+            Subtotal estimado: <span ng-if="$root.CARRINHO_COMPRAS.TOTAL_DE">R$ {{$root.CARRINHO_COMPRAS.TOTAL_DE}}</span><b>R$ {{$root.CARRINHO_COMPRAS.TOTAL_POR}}</b>
+            <br><a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
+        </div>
+        <div ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && !$root.LOCAL.ITEM.MAPS.PROXIMO" id="subTotalCarrinho">
+            <a id="fechar_compra" ng-click="fecharCompra()"><i class="mdi mdi-editor-attach-money"></i> Finalizar compra</a>
+        </div>
+    </div>
+
+    <div class="boxPopup" box="produto" ng-if="$root.PROD_DETALHES">
+        <div class="topTitulo">
+            <a class="open-left" ng-click="$root.clickItem('produtoVoltar')">
+                <i class="mdi mdi-navigation-chevron-left"></i>
+            </a>
+            <div class="textoTitulo">PRODUTO</div>
+        </div>
+        <div class="scrollable-content" scroll md-scroll-y>
+            <div ng-if="$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]&&($root.PROD_DETALHES.UNIDADE_MEDIDA=='U'||$root.PROD_DETALHES.UNIDADE_MEDIDA=='COMBO')&&$root.LOCAL.ITEM.MAPS.PROXIMO" class="addRemoveQtdeProduto" unidade_medida="{{$root.PROD_DETALHES.UNIDADE_MEDIDA}}">
+                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" class="mdi mdi-content-add-circle"></i>
+                <span>{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]:0}}</span>
+                <i ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '-')" class="mdi mdi-content-remove-circle"></i>
+            </div>
+
+            <img data-src="{{$root.PROD_DETALHES.IMAGEM}}" src="img/market4u.png" alt="">
+            <h4>{{$root.PROD_DETALHES.NOME}}</h4>
+
+            <p class="preco" ng-if="$root.LOCAL.ITEM.MAPS.PROXIMO">
+                <label class="de" ng-if="$root.PROD_DETALHES.DE_PRECO_FORMAT">{{$root.PROD_DETALHES.DE_PRECO_FORMAT}}</label>
+                <label>{{$root.PROD_DETALHES.PRECO_FORMAT}}</label>
+                <label class="kg" ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA=='KG'">KG</label>
+            </p>
+
+            <a ng-if="$root.PROD_DETALHES.UNIDADE_MEDIDA!='KG'&&$root.LOCAL.ITEM.MAPS.PROXIMO" ng-click="addRemoveQtdeProd($root.PROD_DETALHES, '+')" id="comprar">COMPRAR{{$root.QTDE_PRODUTOS[$root.PROD_DETALHES.PROD_ID]?' +1':''}}</a>
+
+            <p class="descricao" ng-if="$root.PROD_DETALHES.DESCRICAO" ng-bind-html="$root.PROD_DETALHES.DESCRICAO"></p>
+        </div>
+    </div>
+
+    <a bottom="{{$root.BTN_CARRINHO_BOTTOM?1:0}}" ng-if="$root.CARRINHO_COMPRAS.TOTAL_POR_VALOR && $root.TIPO_PG != 'PAGAMENTO'" id="boxCarrinhoFloat" style="z-index: {{$root.PROD_DETALHES||$root.BTN_CARRINHO_BOTTOM?2:1}}" ng-click="$root.clickItem('carrinho2')">
+        <i class="mdi mdi-action-shopping-cart"></i> {{$root.LOCAL.ITEM.MAPS.PROXIMO?'R$ '+$root.CARRINHO_COMPRAS.TOTAL_POR:''}}
+    </a>
+</div>
+
+<md-content id="boxPagamento" ng-if="$root.TIPO_PG == 'PAGAMENTO'" t="{{$root.BTN_TYPE}}" step="{{STEP}}" class="scrollable-content" scroll md-scroll-y>
+    <ul ng-if="$root.STEPS">
+        <li step="{{ITEM.STEP}}" ng-repeat="ITEM in $root.STEPS" class="{{STEP>=ITEM.STEP?'active':''}}">
+            <p>
+                <label ng-bind-html="ITEM.TEXTO"></label>
+                <br><a id="ver-carrinho" ng-if="$root.PRODUTOS.length" ng-click="verCarrinho()">Voltar para o Carrinho</a>
+                <a id="cancelar-compra" ng-click="location('#!/')" ng-if="!$root.transacaoIdCarrinho&&STEP==3&&$root.PRODUTOS.length">Cancelar</a>
+            </p>
+            <div class="clearBoth"></div>
+            <h4 ng-if="ITEM.SUB_TEXTO">{{ITEM.SUB_TEXTO}}</h4>
+            <div ng-if="STEP==ITEM.STEP&&STEP==3" id="Payment">
+                <h4 ng-if="$root.STATUS_TEXTO">{{$root.STATUS_TEXTO}}</h4>
+
+                <div ng-if="!$root.transacaoIdCarrinho" id="Produtos" class="scrollable-content" scroll md-scroll-y>
+                    <h5>Carrinho</h5>
+
+                    <i class="mdi-navigation-close" onclick="$('#Produtos').hide();"></i>
+
+                    <ul ng-if="$root.PRODUTOS && !$root.transacaoIdCarrinho">
+                        <li ng-repeat="PROD in $root.PRODUTOS">
+                            <div class="info">
+                                <h4>{{PROD.NOME}}</h4>
+                                <span ng-if="PROD.QTDE != NULL">Quantidade <b>{{PROD.QTDE}}</b></span>
+                                <label class="total_de" ng-if="PROD.DE_PRECO_FORMAT"><span class="v">{{PROD.DE_PRECO_FORMAT}}</span></label>
+                                <label><span class="v">{{PROD.PRECO_FORMAT}}</span></label>
+                                <p ng-if="PROD.DESCRICAO != NULL">{{PROD.DESCRICAO}}</p>
+                            </div>
+                            <div class="clearBoth"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="boxPg" ng-include src="$root.BASE+'view/payment/formas_pg.html'"></div>
+            </div>
+        </li>
+    </ul>
+</md-content>
+
+<button step="{{STEP}}" class="btnConfirme" id="btn-home" ng-click="clickBtnHome()" ng-if="$root.STEPS.length && BTN_HOME" ng-bind-html="TEXTO_BTN"></button>

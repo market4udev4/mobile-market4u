@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="br.com.mobile.market4u" version="1.0.25" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>market4u</name>
+    <description>
+        Seu mercado sem sair de casa
+    </description>
+    <content src="index.html#!/" />
+    <access origin="*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market4uapp:" />
+    <preference name="HideKeyboardFormAccessoryBar" value="false"/>
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="1000" />
+    <preference name="ShowSplashScreenSpinner" value="0" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="StatusBarBackgroundColor" value="#00CB00" />
+    <preference name="FadeSplashScreen" value="false" />
+    <preference name="FadeSplashScreenDuration" value="0" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="SplashShowOnlyFirstTime" value="true" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="fullscreen" value="false" />
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="handset" />
+    <preference name="phonegap-version" value="cli-9.0.0" />
+    <preference name="ios-version" value="cli-10.0.0" />
+    <preference name="SwiftVersion" value="3.0" />
+    <preference name="android-build-tool" value="gradle" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <icon density="ldpi" src="res/android/icon32.png" />
+        <icon density="mdpi" src="res/android/icon48.png" />
+        <icon density="hdpi" src="res/android/icon72.png" />
+        <icon density="xhdpi" src="res/android/icon96.png" />
+        <icon density="xxhdpi" src="res/android/icon96.png" />
+        <icon density="xxhdpi" src="res/android/icon144.png" />
+        <icon density="xxxhdpi" src="res/android/icon196.png" />
+        <preference name="android-minSdkVersion" value="23" />
+        <preference name="android-targetSdkVersion" value="28" />
+        <splash density="port-hdpi" src="res/screen/android/480.png" />
+        <splash density="port-ldpi" src="res/screen/android/200.png" />
+        <splash density="port-mdpi" src="res/screen/android/320.png" />
+        <splash density="port-xhdpi" src="res/screen/android/720.png" />
+        <resource-file src="google-services.json" target="app/google-services.json" />
+    </platform>
+    <!--<platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <icon height="16" src="res/ios/16.png" width="16" />
+        <icon height="20" src="res/ios/20.png" width="20" />
+        <icon height="29" src="res/ios/29.png" width="29" />
+        <icon height="32" src="res/ios/32.png" width="32" />
+        <icon height="40" src="res/ios/40.png" width="40" />
+        <icon height="48" src="res/ios/48.png" width="48" />
+        <icon height="50" src="res/ios/50.png" width="50" />
+        <icon height="55" src="res/ios/55.png" width="55" />
+        <icon height="57" src="res/ios/57.png" width="57" />
+        <icon height="58" src="res/ios/58.png" width="58" />
+        <icon height="60" src="res/ios/60.png" width="60" />
+        <icon height="64" src="res/ios/64.png" width="64" />
+        <icon height="72" src="res/ios/72.png" width="72" />
+        <icon height="76" src="res/ios/76.png" width="76" />
+        <icon height="80" src="res/ios/80.png" width="80" />
+        <icon height="87" src="res/ios/87.png" width="87" />
+        <icon height="88" src="res/ios/88.png" width="88" />
+        <icon height="100" src="res/ios/100.png" width="100" />
+        <icon height="114" src="res/ios/114.png" width="114" />
+        <icon height="120" src="res/ios/120.png" width="120" />
+        <icon height="128" src="res/ios/128.png" width="128" />
+        <icon height="144" src="res/ios/144.png" width="144" />
+        <icon height="152" src="res/ios/152.png" width="152" />
+        <icon height="167" src="res/ios/167.png" width="167" />
+        <icon height="172" src="res/ios/172.png" width="172" />
+        <icon height="180" src="res/ios/180.png" width="180" />
+        <icon height="196" src="res/ios/196.png" width="196" />
+        <icon height="216" src="res/ios/216.png" width="216" />
+        <icon height="256" src="res/ios/256.png" width="256" />
+        <icon height="512" src="res/ios/512.png" width="512" />
+        <icon height="1024" src="res/ios/1024.png" width="1024" />
+        <splash src="res/screen/ios/Default@2x~iphone~anyany.png" />
+        <splash src="res/screen/ios/Default@2x~iphone~comany.png" />
+        <splash src="res/screen/ios/Default@2x~iphone~comcom.png" />
+        <splash src="res/screen/ios/Default@3x~iphone~anyany.png" />
+        <splash src="res/screen/ios/Default@3x~iphone~anycom.png" />
+        <splash src="res/screen/ios/Default@3x~iphone~comany.png" />
+        <splash src="res/screen/ios/Default@2x~ipad~anyany.png" />
+        <splash src="res/screen/ios/Default@2x~ipad~comany.png" />
+        <preference name="webviewbounce" value="false" />
+        <preference name="DisallowOverscroll" value="true" />
+        <preference name="SplashScreenDelay" value="0" />
+        <preference name="SplashMaintainAspectRatio" value="false" />
+        <preference name="SplashShowOnlyFirstTime" value="false" />
+        <preference name="StatusBarStyle" value="lightcontent" />
+        <preference name="ShowSplashScreenSpinner" value="false" />
+        <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+        <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+        <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+        <edit-config target="NSBluetoothPeripheralUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+        <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+            <string>Permissões de acesso</string>
+        </edit-config>
+    </platform>-->
+    <engine name="ios" spec="^5.1.1" />
+    <engine name="android" spec="~8.0.0" />
+    <plugin name="cordova-plugin-ios-non-exempt-encryption" />
+    <!--<plugin name="phonegap-plugin-push" spec="^2.2.0">
+        <variable name="FCM_VERSION" value="15.0.0" />
+    </plugin>-->
+
+
+
+    <!--<plugin name="cordova-push-notifications" />-->
+
+    <plugin name="cordova-plugin-keyboard" spec="^1.1.5" />
+    <plugin name="cordova-plugin-splashscreen" />
+    <plugin name="cordova-plugin-device" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-request-location-accuracy" spec="*" />
+    <plugin name="cordova.plugins.diagnostic" spec="*" />
+    <engine name="ios" spec="latest" />
+    <engine name="android" spec="latest" />
+    <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
+    <plugin name="cordova-plugin-statusbar" spec="~2.4.3" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />
+    <plugin name="cordova-plugin-geolocation" />
+    <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
+    <!--<plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.3" />-->
+    <plugin name="phonegap-plugin-barcodescanner" />
+    <plugin name="cordova-plugin-bluetooth-status"/>
+    <plugin name="cordova-plugin-ble-central"/>
+    <plugin name="cordova-plugin-customurlscheme" spec="5.0.1">
+        <param name="URL_SCHEME" value="market4uapp" />
+    </plugin>
+</widget>
