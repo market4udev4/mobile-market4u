@@ -5,7 +5,7 @@ var bluetooth = {
     timeout: null,
     callback_ativado: false,
     writeWithoutResponse: null,
-    detravar: function (set) {
+    detravar: function (set, set_bluetooth) {
         bluetooth.disconnect();
         if (bluetooth.ativado) {
             bluetooth.callback_ativado = false;
@@ -15,7 +15,7 @@ var bluetooth = {
                 [],
                 5,
                 function (device) {
-                    if (device.name == 'market4u') {
+                    if (device.name == 'market4u' + (set_bluetooth ? set_bluetooth : '')) {
                         clearInterval(bluetooth.timeout);
                         bluetooth.deviceId = device.id;
                         try {
@@ -49,8 +49,8 @@ var bluetooth = {
                                     'ffe1',
                                     array.buffer,
                                     function (e) {
-                                        if (window.location.hash != '#!/command/18+/destravar/BEB_ALC')
-                                            Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC', 0, 1);
+                                        if (window.location.hash != '#!/command/18+/destravar/BEB_ALC' + (set_bluetooth ? set_bluetooth : ''))
+                                            Factory.$rootScope.location('#!/command/18+/destravar/BEB_ALC' + (set_bluetooth ? set_bluetooth : ''), 0, 1);
                                         setTimeout(function () {
                                             bluetooth.disconnect();
                                         }, 1000);

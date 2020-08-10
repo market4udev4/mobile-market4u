@@ -1,7 +1,10 @@
 <ul>
-    <li ng-if="usuario.WHATSAPP.ATIVO" ng-click="whatsapp()">
-        <p style="font-weight: 500; margin: 0; padding: 0 5px">Precisa de ajuda ou teve algum problema? Não se preocupe, toque abaixo e fale com alguem do nosso suporte :)</p>
-        <img src="img/whatsapp.png">
+    <li ng-click="location('#!/sac')">
+        <p style="font-weight: 500; margin: 0; padding: 0 5px">Precisa de ajuda ou teve algum problema? Não se preocupe, toque abaixo e fale com alguém do nosso suporte :)</p>
+        <div id="panelIdSac">
+            <i id="supIconSac1" class="mdi-communication-chat"></i>
+            <i id="supIconSac2" class="mdi-communication-chat"></i>
+        </div>
         <a>Contatar suporte</a>
     </li>
     <li ng-if="$root.usuario.FAQ" ng-click="location('#!/faq')">

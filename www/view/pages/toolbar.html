@@ -22,3 +22,33 @@
     <i class="mdi mdi-maps-place"></i> LOCAL
     <span>{{$root.LOCAL.TEXTO}}</span>
 </div>
+
+<div class="destravar_popup" ng-if="$root.CAMBIRELLA && $root.LOCAL.ITEM.ID == 15048" ng-click="clickMenu('destravar_15048_fechar')">
+    <ul>
+        <li ng-click="clickMenu('destravar', 1)">
+            <img height="66" src="img/preferencias/bebidas18.png">
+            Bebidas alcoólicas
+        </li>
+        <li ng-click="clickMenu('destravar', 2)">
+            <img height="66" src="img/preferencias/bebidas.png">
+            Bebidas não alcoólicas
+        </li>
+        <li ng-click="clickMenu('destravar', 3)">
+            <img height="66" src="img/preferencias/congelados.png">
+            Refrigerados
+        </li>
+    </ul>
+</div>
+
+<div class="destravar_popup" ng-if="$root.PDV_1 && $root.LOCAL.ITEM.ID == 15028" ng-click="clickMenu('destravar_15028_fechar')">
+    <ul>
+        <li ng-click="clickMenu('destravar', 0)">
+            <img height="66" src="img/preferencias/bebidas18.png">
+            Bebidas alcoólicas
+        </li>
+        <li ng-click="clickMenu('destravar', 4)">
+            <img height="66" src="https://m-dev4.market4u.com.br/skin/default/images/adega.png">
+            Adega
+        </li>
+    </ul>
+</div>

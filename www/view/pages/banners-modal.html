@@ -1,5 +1,5 @@
 <ul type="MODAL" class="banners">
-    <li class="{{BANNER.ACTIVE?'active':''}}" data-id="{{BANNER.ID}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
+    <li mn-touch swipe-left="touchBanner('MODAL', 'R')" swipe-right="touchBanner('MODAL', 'L')" class="{{BANNER.ACTIVE?'active':''}}" data-id="{{BANNER.ID}}" data-view="{{BANNER.VIEW}}" data-time="{{BANNER.TIME}}" ng-repeat="BANNER in $root.BANNERS_MODAL">
         <a ng-click="$root.clickBanner(BANNER)"><img src="{{BANNER.IMAGE}}" /></a>
     </li>
 </ul>

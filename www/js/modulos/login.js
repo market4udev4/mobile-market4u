@@ -290,7 +290,7 @@ app.controller('CardNew', function($rootScope, $scope, $routeParams) {
     var cc = CC.get();
     $scope.LST = {};
     $.each(cc, function (ID_CC, VALS_CC) {
-        VALS_CC.IMG = 'https://m.market4u.com.br/skin/default/images/bandeira_cc/' + VALS_CC.BANDEIRA + '.png';
+        VALS_CC.IMG = config.url_api[config.ambiente] + 'skin/default/images/bandeira_cc/' + VALS_CC.BANDEIRA + '.png';
         $scope.LST[ID_CC] = VALS_CC;
     });
 
@@ -391,7 +391,7 @@ app.controller('MinhaCarteira', function($rootScope, $scope, $routeParams, Retur
                     ReturnData.FORMAS_PG[idx]['LST'].push({
                         ACTIVE: active,
                         ID: ID,
-                        IMG: "https://m.market4u.com.br/skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
+                        IMG: config.url_api[config.ambiente] + "skin/default/images/bandeira_cc/" + vals.BANDEIRA + ".png",
                         TEXT: vals.TEXT,
                         VALS: {1: vals.HASH}
                     });
@@ -510,7 +510,150 @@ app.controller('HistoricoTransacoesLst', function($rootScope, $scope, $routePara
 app.controller('HistoricoTransacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
     $rootScope.Titulo = "Compras";
+    $rootScope.WHATSAPP = ReturnData.WHATSAPP.url;
     $scope.REG = ReturnData;
+
+    $scope.estornar = function() {
+        $rootScope.location('#!/pedido-estorno/' + ReturnData.ID);
+    };
+
+    $scope.redirecionarParaSac = function () {
+        $rootScope.location('#!/sac/' + ReturnData.SAC);
+    };
+});
+
+app.controller('EstornoItensPedidoGet', function ($rootScope, $scope, $routeParams, ReturnData) {
+    $rootScope.border_top = 1;
+    $rootScope.Titulo = "Estorno";
+    $rootScope.NO_WHATSAPP = false;
+    $rootScope.VALOR_TOTAL_ESTORNO = 0;
+    $rootScope.PEDIDO = ReturnData.PEDIDO;
+
+    $scope.calcularKG = function(produto) {
+        if(produto.UNIDADE_MEDIDA === 'KG') {
+            if(produto.ITEMESTORNO === true) {
+                produto.QTDE_ESTORNO = produto.QTDE;
+                produto.VALOR_ESTORNO = produto.UNITARIO;
+                $rootScope.VALOR_TOTAL_ESTORNO += produto.UNITARIO;
+            }else{
+                produto.QTDE_ESTORNO = 0;
+                produto.VALOR_ESTORNO = 0;
+                $rootScope.VALOR_TOTAL_ESTORNO -= produto.UNITARIO;
+            }
+        }else{
+            if(produto.ITEMESTORNO === false) {
+                $rootScope.VALOR_TOTAL_ESTORNO -= (produto.UNITARIO * produto.QTDE_ESTORNO);
+                produto.QTDE_ESTORNO = 0;
+                produto.VALOR_ESTORNO = 0;
+            }
+        }
+    };
+
+    $scope.addQtdeProduto = function (produto) {
+        if(produto.QTDE_ESTORNO < produto.QTDE) {
+            produto.QTDE_ESTORNO = parseInt(produto.QTDE_ESTORNO) + 1;
+            produto.VALOR_ESTORNO = produto.UNITARIO * produto.QTDE_ESTORNO;
+            $rootScope.VALOR_TOTAL_ESTORNO += produto.UNITARIO * produto.QTDE_ESTORNO;
+        }
+    };
+
+    $scope.removeQtdeProduto = function (produto) {
+        if(produto.QTDE_ESTORNO > 0) {
+            $rootScope.VALOR_TOTAL_ESTORNO -= (produto.UNITARIO * produto.QTDE_ESTORNO);
+            produto.QTDE_ESTORNO = parseInt(produto.QTDE_ESTORNO) - 1;
+            produto.VALOR_ESTORNO = produto.UNITARIO * produto.QTDE_ESTORNO;
+        }
+    };
+
+    $scope.solicitarEstorno = function (pedido) {
+        $scope.data = pedido.PRODUTOS.filter(function (item) {
+            return item.ITEMESTORNO === true;
+        });
+
+        if($scope.data.length) {
+            pedido.NENHUM = false;
+
+            var validador = $scope.validarDados(pedido.MOTIVO, $scope.data);
+
+            pedido.PRODUTOS.map(function (produto)
+            {
+                produto.ERRO_QTD_ESTORNO = !!validador.PRODUTOS.find(element => element === produto.PRODUTOID);
+            });
+
+            pedido.MOTIVO_NULO = validador.MOTIVO === true;
+
+            if(validador.MOTIVO !== true && validador.PRODUTOS.length <= 0) {
+                try {
+                    navigator.notification.confirm('',
+                        function (buttonIndex) {
+                            if (buttonIndex == (Factory.$rootScope.device == 'ios' ? 2 : 1)) {
+                                $scope.enviarSolicitacaoEstorno(pedido);
+                            }
+                        },
+                        'Realmente deseja fazer esta solicitação de estorno?',
+                        Factory.$rootScope.device == 'ios' ? 'Não,Sim' : 'Sim,Não'
+                    );
+                } catch (e) {
+                    if (confirm('Realmente deseja fazer esta solicitação de estorno?')) {
+                        $scope.enviarSolicitacaoEstorno(pedido);
+                    }
+                }
+            }else{
+                $('.scrollable').animate({scrollTop: 0}, 1000);
+            }
+        }else{
+            pedido.PRODUTOS.map(function (produto) {
+                produto.ERRO_QTD_ESTORNO = false;
+            });
+
+            pedido.NENHUM = true;
+
+            $('.scrollable').animate({scrollTop: 0}, 1000);
+        }
+    };
+
+    $scope.validarDados = function (motivo, produtosParaEstorno) {
+        var errors, erroMotivo = false, errorsProduto = [];
+
+        produtosParaEstorno.map(function (value) {
+            if(value.UNIDADE_MEDIDA === 'KG') value.QTDE_ESTORNO = value.QTDE;
+            if(value.QTDE_ESTORNO <= 0 && value.UNIDADE_MEDIDA !== 'KG') errorsProduto.push(value.PRODUTOID);
+        });
+
+        if(motivo === undefined || motivo.length <= 3) erroMotivo = true;
+
+        errors = {"MOTIVO" : erroMotivo, "PRODUTOS" : errorsProduto};
+
+        return errors;
+    };
+
+    $scope.enviarSolicitacaoEstorno = function (pedido) {
+        Factory.ajax({
+                action: 'estorno/solicitarestorno',
+                data: {
+                    'PEDIDO' : {
+                        'ID'        : pedido.ID,
+                        'DATAHORA'  : pedido.DATAHORA,
+                        'MOTIVO'    : pedido.MOTIVO,
+                        'PRODUTOS'  : JSON.stringify($scope.data)
+                    }
+                }
+            },
+            function (data) {
+                if (data.status === 0){
+                    $rootScope.PEDIDO.ERROESTORNO = true;
+                    $rootScope.PEDIDO = '';
+
+                }else if (data.status === 1){
+                    window.history.go(-1);
+
+                }else if(data.status === 2){
+                    $rootScope.PEDIDO = data.PEDIDO;
+
+                }
+            }
+        );
+    }
 });
 
 app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, ReturnData) {
@@ -525,7 +668,7 @@ app.controller('NotificacoesLst', function($rootScope, $scope, $routeParams, Ret
 
 app.controller('NotificacoesGet', function($rootScope, $scope, $routeParams, ReturnData) {
     $rootScope.border_top = 1;
-    $rootScope.Titulo = ReturnData.TITULO;
+    $rootScope.Titulo = ReturnData.TITULO?ReturnData.TITULO:'Não encontrado';
     $scope.REG = ReturnData;
 });
 

@@ -97,37 +97,52 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                 }, 500);
             }, 500);
         };
-        $scope.banner = function (TYPE, TIME) {
+
+        $rootScope.touchBanner = function (TYPE, DIRECTION) {
+            clearTimeout(Payment.timeoutBanner[TYPE]);
+            $scope.bannerActivate(TYPE, DIRECTION);
+        };
+
+        $scope.bannerActivate = function (TYPE, DIRECTION) {
+            var banner = $('.banners[type="' + TYPE + '"] > li.active');
+            if (banner.length) {
+                if ($('.banners[type="' + TYPE + '"]').visible()) {
+                    var _this = null;
+                    switch (DIRECTION) {
+                        case 'R':
+                            _this = banner.next('li').length ? banner.next('li') : $('.banners[type="' + TYPE + '"] > li:first-child');
+                            break;
+                        case 'L':
+                            _this = banner.prev('li').length ? banner.prev('li') : $('.banners[type="' + TYPE + '"] > li:last-child');
+                            break;
+                    }
+                    _this.addClass('active');
+                    var id = _this.data('id');
+                    var view = _this.data('view');
+
+                    if (parseInt(id) && !parseInt(view)) {
+                        _this.data('view', 1);
+                        Factory.ajax(
+                            {
+                                action: 'payment/bannercount',
+                                data: {
+                                    ID: parseInt(id),
+                                    TYPE: 'VIEWS'
+                                }
+                            }
+                        );
+                    }
+                    banner.removeClass('active');
+                }
+                $scope.banner(TYPE, 'R');
+            }
+        };
+        $scope.banner = function (TYPE, DIRECTION) {
             if ($('.banners[type="' + TYPE + '"] > li').length > 1) {
                 clearTimeout(Payment.timeoutBanner[TYPE]);
                 Payment.timeoutBanner[TYPE] = setTimeout(function () {
-                    var banner = $('.banners[type="' + TYPE + '"] > li.active');
-                    if (banner.length) {
-                        if ($('.banners[type="' + TYPE + '"]').visible()) {
-                            var id = 0;
-                            if (banner.next('li').length) {
-                                banner.next('li').addClass('active');
-                                id = banner.next('li').data('id');
-                            } else {
-                                $('.banners[type="' + TYPE + '"] > li:first-child').addClass('active');
-                                id = $('.banners[type="' + TYPE + '"] > li:first-child').data('id');
-                            }
-                            if (parseInt(id)) {
-                                Factory.ajax(
-                                    {
-                                        action: 'payment/bannercount',
-                                        data: {
-                                            ID: parseInt(id),
-                                            TYPE: 'VIEWS'
-                                        }
-                                    }
-                                );
-                            }
-                            banner.removeClass('active');
-                        }
-                        $scope.banner(TYPE, TIME);
-                    }
-                }, TIME);
+                    $scope.bannerActivate(TYPE, DIRECTION);
+                }, parseInt($('.banners[type="' + TYPE + '"] > li.active').data('time')));
             }
         };
         $rootScope.BANNERS_MODAL = $rootScope.BANNERS_MODAL ? $rootScope.BANNERS_MODAL : [];
@@ -150,6 +165,8 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                             }
                         },
                         function (data) {
+                            localStorage.setItem("WIFI_NOME",data.LOCAL.ITEM.WIFI_NOME);
+                            localStorage.setItem("WIFI_SENHA",data.LOCAL.ITEM.WIFI_SENHA);
                             $('body').attr('scroll', 0);
                             if (data.LOCAL)
                                 $rootScope.LOCAL = data.LOCAL;
@@ -159,12 +176,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                 if (data.COMPRAS.BANNERS_MODAL.length) {
                                     setTimeout(function () {
                                         $('div#banner_modal').css('display', 'flex');
-                                        $scope.banner('MODAL', data.COMPRAS.BANNERS_TIME);
+                                        $scope.banner('MODAL', 'R');
                                     }, 1000);
                                 }
                                 if (data.COMPRAS.BANNERS.length) {
                                     setTimeout(function () {
-                                        $scope.banner('COMPRAS', data.COMPRAS.BANNERS_TIME);
+                                        $scope.banner('COMPRAS', 'R');
                                     }, 1000);
                                 }
                             }
@@ -437,15 +454,17 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                         $rootScope.location(BANNER.VALUE, BANNER.EXTERNAL ? 1 : 0, 1);
                     break;
             }
-            Factory.ajax(
-                {
-                    action: 'payment/bannercount',
-                    data: {
-                        ID: BANNER.ID,
-                        TYPE: 'CLICKS'
+            if (!parseInt(BANNER.VIEW)) {
+                Factory.ajax(
+                    {
+                        action: 'payment/bannercount',
+                        data: {
+                            ID: BANNER.ID,
+                            TYPE: 'CLICKS'
+                        }
                     }
-                }
-            );
+                );
+            }
         };
 
         $rootScope.PESQUISA = '';
@@ -477,12 +496,12 @@ app.controller('Index', function($scope, $rootScope, $routeParams, deviceDetecto
                                 if (data.COMPRAS.BANNERS_MODAL.length) {
                                     setTimeout(function () {
                                         $('div#banner_modal').css('display', 'flex');
-                                        $scope.banner('MODAL', data.COMPRAS.BANNERS_TIME);
+                                        $scope.banner('MODAL', 'R');
                                     }, 1000);
                                 }
                                 if (data.COMPRAS.BANNERS.length) {
                                     setTimeout(function () {
-                                        $scope.banner('BUSCA', data.COMPRAS.BANNERS_TIME);
+                                        $scope.banner('BUSCA', 'R');
                                     }, 1000);
                                 }
                                 $rootScope.PRODUTOS_CATEGORIAS_BUSCA.SCROLL = data.COMPRAS.SCROLL;

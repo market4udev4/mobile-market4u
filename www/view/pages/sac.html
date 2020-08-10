@@ -1,4 +1,7 @@
 <md-content class="scrollable-content" style="padding: 15px 0 110px;" scroll md-scroll-y>
+    <div class="button_row">
+        <button class="novoChamado" ng-click="OpenNewSac()">Novo Chamado</button>
+    </div>
     <div class="abas">
         <div class="inner_abas">
             <div class="item_aba">
@@ -6,13 +9,10 @@
                 <div class="active borderAba abertos"></div>
             </div>
             <div class="item_aba">
-                <div class="fechados abs" ng-click="TransitionAbas($event.target)">Fechados</div>
+                <div class="fechados abs"  ng-click="TransitionAbas($event.target)">Fechados</div>
                 <div class="borderAba fechados"></div>
             </div>
         </div>
-    </div>
-    <div class="button_row">
-        <button class="novoChamado" ng-click="OpenNewSac()">Novo Chamado</button>
     </div>
 
     <div class="panelItems" id="abertos" >
@@ -25,12 +25,12 @@
 
     <div class="panelItems" id="fechados">
         <div id="headerFechados">
-            <span>Gostou do nosso atendimento? Aqui preparamos uma lista com os chamados que você ja terminou. Conte-nos o que achou!</span>
+            <span>Gostou do nosso atendimento? Aqui preparamos uma lista com os chamados que já foram finalizados. Conte-nos o que achou!</span>
         </div>
         <div class="chamado fechado" ng-repeat="item in FECHADOS">
-           <div class="fechado_chamado_header">
-               <h4 class="chamado_title">{{item.TITULO}}</h4>
-           </div>
+            <div class="fechado_chamado_header">
+                <span class="chamado_title">{{item.TITULO}}</span>
+            </div>
             <div class="area_ranking">
                 <input type="hidden" class="id_sac_fechado" value="{{item.ID}}">
                 <ul>
@@ -51,8 +51,8 @@
                     <textarea name="comments" class="comments textcomments" cols="30" rows="10" placeholder="Comentários sobre o atendimento"></textarea>
                 </div>
                 <div class="buttonsFechado">
-                    <button class="saveRankingFechado buttonfechados" ng-click="saveAnalise($event.target)">Salvar pontuação</button>
                     <button class="cancelRankingFechado buttonfechados" ng-click="closeChamadoAnalise($event.target)">Cancelar</button>
+                    <button class="saveRankingFechado buttonfechados" ng-click="saveAnalise($event.target)">Enviar avaliação</button>
                 </div>
             </div>
             <div class="buttonsRanking " ng-if="item.PONTUACAO == 0 || item.PONTUACAO == null" >
@@ -71,20 +71,39 @@
 <md-content id="newSac">
     <div id="headerFormSac">
         <h3>Precisa de ajuda?</h3>
-        <span>Crie esse chamado para entrar em contato conosco para que possamos te ajudar da melhor forma possível!</span>
+        <span>Crie um chamado para entrar em contato conosco para ajudarmos da melhor forma possível!</span>
     </div>
     <form action="" class="fromnew" id="fromnew">
         <input type="hidden" name="CLIENTE" value="{{LOGIN.ID}}">
+        <small style="color: red; display: none" id="errornewSac">Por favor preencha os campos em vermelho!</small>
         <div class="cell-form">
-            <input type="text" name="TITULO" placeholder="Título">
+            <input type="text" name="TITULO" placeholder="Título" class="required">
+        </div>
+        <div class="cell-form radiosInp">
+            <div class="cell-radio">
+                <input type="radio" id="DU" name="TIPO" value="DU" checked>
+                <label for="DU">Dúvida</label>
+            </div>
+            <div class="cell-radio">
+                <input type="radio" id="SU" name="TIPO" value="SU">
+                <label for="SU">Sugestão</label>
+            </div>
+            <div class="cell-radio">
+                <input type="radio" id="RE" name="TIPO" value="RE">
+                <label for="RE">Reclamação</label>
+            </div>
+            <div class="cell-radio">
+                <input type="radio" id="OU" name="TIPO" value="OU">
+                <label for="OU">Outros</label>
+            </div>
         </div>
         <div class="cell-form">
-            <textarea name="DESCRICAO" id="descricao" cols="30" rows="10" placeholder="Descreva brevemente seu problema!"></textarea>
+            <textarea name="DESCRICAO" id="descricao" cols="30" rows="10" placeholder="Descreva brevemente seu problema!" class="required"></textarea>
         </div>
         <div class="cell-form finalForm">
             <div class="two-buttons">
-                <button type="button" id="saveSac" ng-click="saveSac()">Salvar</button>
                 <button type="button" id="cancelSac" ng-click="CloseNewSac()">Cancelar</button>
+                <button type="button" id="saveSac" ng-click="saveSac()">Salvar</button>
 
             </div>
         </div>

@@ -1,3 +1,8 @@
-<i class="mdi mdi-device-wifi-tethering"></i>
-rede: <b>market4u</b> senha: <b>bio12345</b>
-<h4>Aproveite nosso wi-fi. A rede e a senha são iguais em todos os condomínios :)</h4>
+<div ng-init="getWifi();">
+    <div ng-if="$root.LOCAL.ITEM || $root.wifi_nome">
+        <i class="mdi mdi-device-wifi-tethering"></i>
+        rede: <b>{{$root.LOCAL.ITEM.WIFI_NOME ? $root.LOCAL.ITEM.WIFI_NOME : $root.wifi_nome}}</b>
+        senha: <b>{{$root.LOCAL.ITEM.WIFI_SENHA ? $root.LOCAL.ITEM.WIFI_SENHA : $root.wifi_senha}}</b>
+        <h4>Aproveite nosso wi-fi :)</h4>
+    </div>
+</div>

@@ -6,6 +6,30 @@
                 <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
             </div>
         </li>
+        <li ng-switch-when="BEB_ALC1">
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
+            <div class="progress-circle progress-{{PERCENTUAL}}">
+                <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
+            </div>
+        </li>
+        <li ng-switch-when="BEB_ALC2">
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
+            <div class="progress-circle progress-{{PERCENTUAL}}">
+                <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
+            </div>
+        </li>
+        <li ng-switch-when="BEB_ALC3">
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
+            <div class="progress-circle progress-{{PERCENTUAL}}">
+                <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
+            </div>
+        </li>
+        <li ng-switch-when="BEB_ALC4">
+            <p ng-bind-html="to_trusted(REG.TEXTO)"></p>
+            <div class="progress-circle progress-{{PERCENTUAL}}">
+                <span>{{PERCENTUAL==100?'':TIME}}<i ng-if="PERCENTUAL==100" class="mdi mdi-action-lock-outline"></i></span>
+            </div>
+        </li>
         <li style="text-align: center" ng-switch-when="BLUETOOTH">
             <p style="margin: 60px 0" ng-bind-html="to_trusted(REG.TEXTO)"></p>
             <img ng-if="IMG" src="img/loader.gif" border="0">

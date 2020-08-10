@@ -109,8 +109,6 @@
     <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/login.js"></script>
     <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/bar-code-scanner.js"></script>
     <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/bluetooth.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/sac.js"></script>
-    <script onerror="semInternet()" src="https://m-dev4.market4u.com.br/Mobile/www/js/modulos/chat.js"></script>
   </head>
   <body addsaldo="{{!usuario.MEUSALDO && usuario.MEUSALDO_ATIVADO?1:0}}" device="{{device}}" new_iphone="{{new_iphone}}" controller="{{controller}}" ng-app="App">
     <div id="carregando" style="display: none">
@@ -123,7 +121,7 @@
     <div mn-touch swipe-right="swipeRight()" ng-if="toolbar" id="toolbar" ng-include src="$root.BASE+'view/pages/toolbar.html'"></div>
 
     <div class="app" ng-controller="Main">
-      <a style="display: none" ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp()">
+      <a style="display: none" ng-if="usuario.WHATSAPP.ATIVO && $root.NO_WHATSAPP" id="whatsapp" ng-click="whatsapp(WHATSAPP.url)">
         <img src="img/whatsapp.png">
       </a>
 

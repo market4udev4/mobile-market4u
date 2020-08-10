@@ -226,6 +226,22 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                 }
             }
         })
+        .when("/pedido-estorno/:ID", {
+            templateUrl: base + "Mobile/www/view/conecte-se/estorno-pedido.html",
+            controller: 'EstornoItensPedidoGet',
+            resolve: {
+                ReturnData: function ($route) {
+                    return Factory.ajax(
+                        {
+                            action: 'estorno/getitenspedido',
+                            data: {
+                                ID: $route.current.params.ID
+                            }
+                        }
+                    );
+                }
+            }
+        })
         .when("/notificacoes", {
             templateUrl: base + "Mobile/www/view/conecte-se/notificacoes.html",
             controller: 'NotificacoesLst',
@@ -315,6 +331,10 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                         case 'BLUETOOTH':
                         case 'VENDA_BEBIDA_PROIBIDA':
                         case 'BEB_ALC':
+                        case 'BEB_ALC1':
+                        case 'BEB_ALC2':
+                        case 'BEB_ALC3':
+                        case 'BEB_ALC4':
                             if (!Page.active) {
                                 window.history.go(-1);
                                 return [];
@@ -322,6 +342,19 @@ app.config(function($routeProvider, $mdThemingProvider, $mdDateLocaleProvider, $
                                 switch ($route.current.params.SET) {
                                     case 'BLUETOOTH':
                                     case 'BEB_ALC':
+                                    case 'BEB_ALC1':
+                                    case 'BEB_ALC2':
+                                    case 'BEB_ALC3':
+                                    case 'BEB_ALC4':
+                                        clearTimeout(Factory.timeout);
+                                        Factory.timeout = setTimeout(function () {
+                                            Factory.ajax(
+                                                {
+                                                    action: 'options/command',
+                                                    data: $route.current.params
+                                                }
+                                            );
+                                        }, 500);
                                         return {};
                                         break;
                                     default:

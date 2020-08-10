@@ -1,0 +1,54 @@
+<md-content class = "scrollable" scroll md-scroll-y>
+    <ul>
+        <li id="exibir-produto-id" ng-if = "PEDIDO.ID">
+            <span>Pedido</span> #{{ PEDIDO.ID }}
+        </li>
+        <li ng-if = "PEDIDO.NENHUM" class = "danger">
+            <span>É necessário pedir estorno de pelo menos um produto!</span>
+        </li>
+        <li ng-if = "PEDIDO.MOTIVO_NULO">
+            <span class = "danger element-block" style = "margin-bottom: 10px;">Por favor, preencha o motivo de sua solicitação.</span>
+        </li>
+        <li ng-repeat = "PRODUTO in PEDIDO.PRODUTOS" class = "produtos">
+            <div class="container-item">
+                <div class = "input-checkbox">
+                    <input ng-if="PRODUTO.UNITARIO" type = "checkbox" ng-model = "PRODUTO.ITEMESTORNO" ng-click="calcularKG(PRODUTO)"/>
+                </div>
+
+                <div class = "imagem">
+                    <img data-src="{{ PRODUTO.IMAGEM }}" src="img/market4u.png" alt="">
+                </div>
+
+                <div class = "informacoes">
+                    <h4>{{PRODUTO.NOME}}</h4>
+
+                    <label class = "valor-pago"><span class="v"> Valor pago R${{ PRODUTO.UNITARIO.formatPrice(2,3,'.',',') }}</span></label>
+                    <label class="valor-total-estorno"><span class="v">Total estorno R$ <b>{{ PRODUTO.VALOR_ESTORNO.formatPrice(2,3,'.',',') }}</b></span></label>
+                    <label class="alert-produto-estorno-zerado danger" ng-if="PRODUTO.ERRO_QTD_ESTORNO"><span class="v">* Por favor, selecione a quantidade do produto.</span></label>
+                </div>
+            </div>
+
+            <div ng-show="PRODUTO.ITEMESTORNO" ng-if = "PRODUTO.UNIDADE_MEDIDA != 'KG'" class="addRemoveQtdeProduto" unidade_medida="{{PRODUTO.UNIDADE_MEDIDA}}">
+                <i ng-click="addQtdeProduto(PRODUTO)" class="mdi mdi-content-add-circle"></i>
+                    <span>{{ PRODUTO.QTDE_ESTORNO }}</span>
+                <i ng-click="removeQtdeProduto(PRODUTO)" class="mdi mdi-content-remove-circle"></i>
+            </div>
+        </li>
+        <li>
+            <div ng-if="PEDIDO.PRODUTOS" class="element-block" style="text-align: right;"> R$ {{ VALOR_TOTAL_ESTORNO.formatPrice(2,3,'.',',') }} </div>
+        </li>
+        <li ng-if = "PEDIDO.PRODUTOS.length">
+            <label class = "element-block">Motivo <span class = "danger">*</span></label>
+            <textarea class = "input-motivo" style="width: 100%; height: 300px; padding: 10px;" ng-model = "PEDIDO.MOTIVO"></textarea>
+        </li>
+        <li style="height: auto;text-align: center" ng-if = "!PEDIDO.CAN_ESTORNO">
+            O tempo para o pedido de estorno acabou!
+        </li>
+        <li style="height: auto;text-align: center" ng-if = "PEDIDO.ERROESTORNO">
+            Não foi possível concluir o pedido de estorno, por favor tente novamente mais tarde!
+        </li>
+    </ul>
+</md-content>
+<div ng-if="PEDIDO.PRODUTOS">
+    <button class="btnConfirmarEstorno" ng-click="solicitarEstorno(PEDIDO)">Solicitar estorno <i class="mdi mdi-navigation-arrow-forward"></i></button>
+</div>

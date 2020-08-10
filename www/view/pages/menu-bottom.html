@@ -11,6 +11,12 @@
 <li class="{{controller == 'Cadastro'?'active':''}}" style="float: right" ng-click="clickMenu('ajustes')">
     <i class="mdi mdi-social-person"></i> {{usuario.PRIMEIRONOME?usuario.PRIMEIRONOME:'Perfil'}}
 </li>
-<li style="float: right" ng-click="clickMenu('destravar')">
+<li ng-if="$root.LOCAL.ITEM.ID != 15048 && $root.LOCAL.ITEM.ID != 15028" style="float: right" ng-click="clickMenu('destravar')">
     <i class="mdi mdi-action-lock-open"></i> Destravar <span>18+</span>
+</li>
+<li ng-if="$root.LOCAL.ITEM.ID == 15048" style="float: right" ng-click="clickMenu('destravar_15048')">
+    <i class="mdi mdi-action-lock-open"></i> Destravar
+</li>
+<li ng-if="$root.LOCAL.ITEM.ID == 15028" style="float: right" ng-click="clickMenu('destravar_15028')">
+    <i class="mdi mdi-action-lock-open"></i> Destravar
 </li>

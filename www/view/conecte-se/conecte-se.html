@@ -7,7 +7,9 @@
 
             <br><a class="a-btn" type="facebook" ng-click="login('facebook')">Login usando Facebook</a>
 
-            <br><br>ou faça login por<br><br>
+            <div ng-if="$root.device=='ios'"><a class="a-btn" type="apple" ng-click="login('apple')">Iniciar sessão com a Apple</a></div>
+
+            <br>ou faça login por<br><br>
         </div>
 
         <label for="email_cpf">E-mail ou CPF</label>
